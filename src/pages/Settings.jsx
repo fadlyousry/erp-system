@@ -383,10 +383,50 @@ export default function Settings() {
   const [geminiApiKey, setGeminiApiKey] = useState('');
   const [showQuickMarketingInProducts, setShowQuickMarketingInProducts] = useState(true);
   const [savingMarketingSettings, setSavingMarketingSettings] = useState(false);
+  const [checkingUpdate, setCheckingUpdate] = useState(false);
 
   const openLicenseManager = () => {
     emitOpenLicenseManagerRequest();
   };
+
+  const checkingForUpdateRef = useRef(false);
+
+  useEffect(() => {
+    if (!window.api?.onUpdateStatus) return;
+
+    // Listen to update status globally but only act if we initiated the check
+    window.api.onUpdateStatus((statusData) => {
+      if (!checkingForUpdateRef.current) return;
+
+      if (statusData.status === 'up-to-date') {
+        safeAlert('أنت تستخدم أحدث إصدار متاح، لا توجد تحديثات جديدة حالياً.', null, { title: 'أحدث إصدار' });
+        checkingForUpdateRef.current = false;
+        setCheckingUpdate(false);
+      } else if (statusData.status === 'available' || statusData.status === 'error') {
+        // Let UpdateNotification handle the UI for available updates and errors
+        checkingForUpdateRef.current = false;
+        setCheckingUpdate(false);
+      }
+    });
+    // We intentionally do not call offUpdateStatus here because it would remove UpdateNotification's listener too
+  }, []);
+
+  const handleCheckForUpdate = useCallback(async () => {
+    if (!window.api?.checkForUpdate) {
+      safeAlert('ميزة البحث عن التحديثات غير مدعومة في هذه النسخة', null, { title: 'البحث عن تحديثات' });
+      return;
+    }
+
+    setCheckingUpdate(true);
+    checkingForUpdateRef.current = true;
+
+    try {
+      await window.api.checkForUpdate();
+    } catch (err) {
+      checkingForUpdateRef.current = false;
+      setCheckingUpdate(false);
+    }
+  }, []);
 
   const applyBackupSettingsResult = useCallback((result) => {
     const nextBackupSettings = normalizeBackupSettings(result?.backupSettings);
@@ -2132,6 +2172,16 @@ export default function Settings() {
                   <ShieldCheck size={18} />
                   {' '}
                   إدارة الترخيص
+                </button>
+                <button
+                  type="button"
+                  onClick={handleCheckForUpdate}
+                  className="settings-btn settings-btn-secondary"
+                  disabled={savingBasicSettings || checkingUpdate}
+                >
+                  <Upload size={18} />
+                  {' '}
+                  {checkingUpdate ? 'جاري البحث...' : 'البحث عن تحديثات'}
                 </button>
               </div>
             </section>

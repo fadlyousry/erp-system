@@ -40,7 +40,6 @@
       "output": "release-build",
       "buildResources": "build"
     },
-    "artifactName": "${productName} Setup ${version}.${ext}",
     "executableName": "fadl-erp",
     "copyright": "Copyright (c) 2026 Fadl Tech",
     "files": [
