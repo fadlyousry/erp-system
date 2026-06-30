@@ -12,7 +12,12 @@ const UpdateNotification = () => {
         
         // Show notification for specific statuses
         if (['available', 'downloading', 'ready', 'error'].includes(data.status)) {
-          setVisible(true);
+          // Ignore "No published versions on GitHub" error as it's normal before the first release
+          if (data.status === 'error' && data.message && data.message.includes('No published versions on GitHub')) {
+            setVisible(false);
+          } else {
+            setVisible(true);
+          }
         }
         
         // Auto-hide 'up-to-date' or 'checking' after a few seconds if we wanted to show them
