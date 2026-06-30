@@ -4,10 +4,10 @@
   background: rgba(15, 23, 42, 0.4);
   backdrop-filter: blur(8px);
   display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* Align to the left edge */
+  align-items: stretch; /* Full height */
   z-index: 1000;
-  padding: 24px;
+  padding: 0; /* Remove padding to touch the edge */
   animation: premiumOverlayFadeIn 0.3s ease-out;
 }
 
@@ -17,20 +17,21 @@
 }
 
 .premium-sale-modal {
-  width: min(900px, 100%);
-  max-height: 90vh;
+  width: min(800px, 95vw); /* Slightly narrower than centered modal */
+  height: 100vh;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
   background: #ffffff;
-  border-radius: 24px;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(226, 232, 240, 0.5);
+  border-radius: 0 24px 24px 0; /* Rounded on the right side for RTL */
+  box-shadow: 25px 0 50px -12px rgba(0, 0, 0, 0.25);
   overflow: hidden;
-  animation: premiumModalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: premiumModalSlideInLeft 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes premiumModalSlideUp {
-  from { opacity: 0; transform: translateY(20px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+@keyframes premiumModalSlideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
 }
 
 .premium-sale-modal-header {
@@ -295,10 +296,11 @@
 }
 
 .premium-customer-balance {
-  margin-top: 16px;
+  margin-top: 0;
   padding: 16px;
   background: #f8fafc;
-  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   gap: 8px;

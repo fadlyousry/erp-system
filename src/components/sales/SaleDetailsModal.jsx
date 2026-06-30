@@ -126,6 +126,18 @@ function SaleDetailsModal({ sale, onClose }) {
                   <div className="premium-notes-text">{sale.notes}</div>
                 </div>
               )}
+              {sale.customer && (
+                <div className="premium-customer-balance">
+                  <div className="premium-balance-row">
+                    <span title="الرصيد السابق مقدر بناءً على الرصيد الحالي والمتبقي من الفاتورة">الرصيد السابق (تقديري):</span>
+                    <span>{formatMoney((sale.customer.balance || 0) - (sale.remainingAmount || 0))} ج.م</span>
+                  </div>
+                  <div className="premium-balance-row current">
+                    <span>الرصيد الحالي للعميل:</span>
+                    <span>{formatMoney(sale.customer.balance || 0)} ج.م</span>
+                  </div>
+                </div>
+              )}
               {sale.createdByUser && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#64748b', fontSize: '13px' }}>
                   <User size={16} /> <span>بواسطة: {sale.createdByUser.name}</span>
@@ -169,19 +181,6 @@ function SaleDetailsModal({ sale, onClose }) {
                   <span>{formatMoney(sale.remainingAmount || 0)} ج.م</span>
                 </div>
               </div>
-
-              {sale.customer && (
-                <div className="premium-customer-balance">
-                  <div className="premium-balance-row">
-                    <span title="الرصيد السابق مقدر بناءً على الرصيد الحالي والمتبقي من الفاتورة">الرصيد السابق (تقديري):</span>
-                    <span>{formatMoney((sale.customer.balance || 0) - (sale.remainingAmount || 0))} ج.م</span>
-                  </div>
-                  <div className="premium-balance-row current">
-                    <span>الرصيد الحالي للعميل:</span>
-                    <span>{formatMoney(sale.customer.balance || 0)} ج.م</span>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
