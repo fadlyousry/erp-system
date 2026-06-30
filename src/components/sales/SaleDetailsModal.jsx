@@ -1,4 +1,6 @@
 import React, { memo } from 'react';
+import { FileText, Calendar, User, CreditCard, Tag, X, CheckCircle, Receipt, ArrowDownToLine, Scale } from 'lucide-react';
+import './SaleDetailsModal.css';
 
 const formatDateTime = (value) => {
   if (!value) return '-';
@@ -9,7 +11,8 @@ const formatDateTime = (value) => {
     month: '2-digit',
     day: '2-digit',
     hour: '2-digit',
-    minute: '2-digit'
+    minute: '2-digit',
+    hour12: true
   });
 };
 
@@ -25,106 +28,162 @@ function SaleDetailsModal({ sale, onClose }) {
 
   const isLoadingDetails = Boolean(sale?.isLoadingDetails);
   const items = Array.isArray(sale?.items) ? sale.items : [];
+  
+  const totalItemsValue = items.reduce((sum, item) => sum + ((item.price || 0) * (item.quantity || 0)), 0);
+  const isPaid = (sale.remainingAmount || 0) <= 0;
+  const isPartial = (sale.paidAmount || 0) > 0 && (sale.remainingAmount || 0) > 0;
 
   return (
-    <div className="sales-modal-overlay" onClick={onClose}>
-      <div className="sales-modal" onClick={(event) => event.stopPropagation()}>
-        <div className="sales-modal-header">
-          <h2>تفاصيل الفاتورة #{formatInteger(sale.id)}</h2>
-          <button className="sales-modal-close" onClick={onClose}>
-            ×
+    <div className="premium-sale-modal-overlay" onClick={onClose}>
+      <div className="premium-sale-modal" onClick={(event) => event.stopPropagation()}>
+        <div className="premium-sale-modal-header">
+          <div className="premium-sale-modal-title">
+            <h2>تفاصيل الفاتورة #{formatInteger(sale.id)}</h2>
+            <div className={`premium-status-badge ${isPaid ? 'status-paid' : isPartial ? 'status-partial' : 'status-unpaid'}`}>
+              {isPaid ? <CheckCircle size={16} /> : <Receipt size={16} />}
+              {isPaid ? 'خالصة' : isPartial ? 'مدفوعة جزئياً' : 'آجلة'}
+            </div>
+          </div>
+          <button className="premium-sale-modal-close" onClick={onClose}>
+            <X size={24} />
           </button>
         </div>
 
-        <div className="sales-modal-meta">
-          <div><strong>التاريخ:</strong> {formatDateTime(getSaleDate(sale))}</div>
-          <div><strong>العميل:</strong> {sale.customer?.name || 'عميل نقدي'}</div>
-          <div><strong>طريقة الدفع:</strong> {sale.payment || sale.paymentMethod?.name || '-'}</div>
-          <div><strong>نوع البيع:</strong> {sale.saleType || '-'}</div>
-        </div>
+        <div className="premium-sale-modal-body">
+          <div className="premium-info-grid">
+            <div className="premium-info-card">
+              <div className="premium-info-icon"><Calendar size={20} /></div>
+              <div className="premium-info-content">
+                <span className="premium-info-label">تاريخ الفاتورة</span>
+                <span className="premium-info-value" dir="ltr">{formatDateTime(getSaleDate(sale))}</span>
+              </div>
+            </div>
+            <div className="premium-info-card">
+              <div className="premium-info-icon"><User size={20} /></div>
+              <div className="premium-info-content">
+                <span className="premium-info-label">العميل</span>
+                <span className="premium-info-value">{sale.customer?.name || 'عميل نقدي'}</span>
+              </div>
+            </div>
+            <div className="premium-info-card">
+              <div className="premium-info-icon"><CreditCard size={20} /></div>
+              <div className="premium-info-content">
+                <span className="premium-info-label">طريقة الدفع</span>
+                <span className="premium-info-value">{sale.payment || sale.paymentMethod?.name || '-'}</span>
+              </div>
+            </div>
+            <div className="premium-info-card">
+              <div className="premium-info-icon"><Tag size={20} /></div>
+              <div className="premium-info-content">
+                <span className="premium-info-label">نوع البيع</span>
+                <span className="premium-info-value">{sale.saleType || '-'}</span>
+              </div>
+            </div>
+          </div>
 
-        <div className="sales-modal-table-wrap">
-          <table className="sales-modal-table">
-            <thead>
-              <tr>
-                <th>الصنف</th>
-                <th>المقاس</th>
-                <th>اللون</th>
-                <th>الكمية</th>
-                <th>السعر</th>
-                <th>الإجمالي</th>
-              </tr>
-            </thead>
-            <tbody>
-              {isLoadingDetails ? (
+          <div className="premium-table-container">
+            <table className="premium-table">
+              <thead>
                 <tr>
-                  <td colSpan={6} className="sales-empty-state">جاري تحميل التفاصيل...</td>
+                  <th>الصنف</th>
+                  <th>المقاس</th>
+                  <th>اللون</th>
+                  <th>الكمية</th>
+                  <th>السعر</th>
+                  <th>الإجمالي</th>
                 </tr>
-              ) : items.length === 0 ? (
-                <tr>
-                  <td colSpan={6} className="sales-empty-state">لا توجد أصناف في الفاتورة</td>
-                </tr>
-              ) : (
-                items.map((item) => (
-                  <tr key={`${item.saleId || sale.id}-${item.id}-${item.variantId}`}>
-                    <td>{item.variant?.product?.name || 'منتج'}</td>
-                    <td>{item.variant?.productSize || '-'}</td>
-                    <td>{item.variant?.color || '-'}</td>
-                    <td>{formatInteger(item.quantity)}</td>
-                    <td>{formatMoney(item.price)}</td>
-                    <td>{formatMoney((item.price || 0) * (item.quantity || 0))}</td>
+              </thead>
+              <tbody>
+                {isLoadingDetails ? (
+                  <tr>
+                    <td colSpan={6} style={{ textAlign: 'center', color: '#64748b' }}>جاري تحميل التفاصيل...</td>
                   </tr>
-                ))
+                ) : items.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} style={{ textAlign: 'center', color: '#64748b' }}>لا توجد أصناف في الفاتورة</td>
+                  </tr>
+                ) : (
+                  items.map((item) => (
+                    <tr key={`${item.saleId || sale.id}-${item.id}-${item.variantId}`}>
+                      <td>{item.variant?.product?.name || 'منتج'}</td>
+                      <td>{item.variant?.productSize || '-'}</td>
+                      <td>{item.variant?.color || '-'}</td>
+                      <td>{formatInteger(item.quantity)}</td>
+                      <td>{formatMoney(item.price)} ج.م</td>
+                      <td style={{ fontWeight: 'bold', color: '#0f172a' }}>{formatMoney((item.price || 0) * (item.quantity || 0))} ج.م</td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="premium-summary-section">
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {sale.notes && (
+                <div className="premium-notes-container">
+                  <div className="premium-notes-title"><FileText size={18} /> ملاحظات الفاتورة</div>
+                  <div className="premium-notes-text">{sale.notes}</div>
+                </div>
               )}
-            </tbody>
-          </table>
-        </div>
-
-        <div className="sales-modal-total-breakdown" style={{ display: 'flex', flexDirection: 'column', gap: '8px', borderTop: '1px solid #e2e8f0', paddingTop: '12px', marginTop: '12px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', color: '#475569' }}>
-            <span>إجمالي الأصناف:</span>
-            <span>{formatMoney(items.reduce((sum, item) => sum + ((item.price || 0) * (item.quantity || 0)), 0))} ج.م</span>
-          </div>
-          
-          {sale.discount > 0 && (
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', color: '#ef4444' }}>
-              <span>خصم إضافي:</span>
-              <span>- {formatMoney(sale.discount)} ج.م</span>
+              {sale.createdByUser && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#64748b', fontSize: '13px' }}>
+                  <User size={16} /> <span>بواسطة: {sale.createdByUser.name}</span>
+                </div>
+              )}
             </div>
-          )}
-          {sale.couponDiscount > 0 && (
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', color: '#7c3aed', fontWeight: 'bold' }}>
-              <span>خصم الكوبون ({sale.coupon?.code || 'نشط'}):</span>
-              <span>- {formatMoney(sale.couponDiscount)} ج.م</span>
-            </div>
-          )}
-          <div className="sales-modal-total" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '18px', fontWeight: 'bold', color: '#0f766e', borderTop: '2px solid #cbd5e1', paddingTop: '8px', marginTop: '4px', paddingBottom: '8px', borderBottom: '1px solid #e2e8f0' }}>
-            <span>صافي الفاتورة:</span>
-            <strong>{formatMoney(sale.total)} ج.م</strong>
-          </div>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '15px', color: '#1e293b', fontWeight: 'bold' }}>
-            <span>المدفوع:</span>
-            <span style={{ color: '#059669' }}>{formatMoney(sale.paidAmount || 0)} ج.م</span>
-          </div>
-
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '15px', color: '#1e293b', fontWeight: 'bold' }}>
-            <span>المتبقي:</span>
-            <span style={{ color: '#dc2626' }}>{formatMoney(sale.remainingAmount || 0)} ج.م</span>
-          </div>
-
-          {sale.customer && (
-            <div style={{ marginTop: '8px', paddingTop: '12px', borderTop: '1px dashed #cbd5e1', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#64748b' }}>
-                <span title="الرصيد السابق مقدر بناءً على الرصيد الحالي والمتبقي من الفاتورة">الرصيد السابق للعميل (تقديري):</span>
-                <span>{formatMoney((sale.customer.balance || 0) - (sale.remainingAmount || 0))} ج.م</span>
+            <div className="premium-totals-card">
+              <div className="premium-total-row">
+                <span>إجمالي الأصناف:</span>
+                <span>{formatMoney(totalItemsValue)} ج.م</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', color: '#334155', fontWeight: 'bold' }}>
-                <span>الرصيد الحالي للعميل:</span>
-                <span>{formatMoney(sale.customer.balance || 0)} ج.م</span>
+              
+              {sale.discount > 0 && (
+                <div className="premium-total-row discount">
+                  <span>خصم إضافي:</span>
+                  <span>- {formatMoney(sale.discount)} ج.م</span>
+                </div>
+              )}
+              {sale.couponDiscount > 0 && (
+                <div className="premium-total-row coupon">
+                  <span>خصم الكوبون ({sale.coupon?.code || 'نشط'}):</span>
+                  <span>- {formatMoney(sale.couponDiscount)} ج.م</span>
+                </div>
+              )}
+
+              <div className="premium-total-divider"></div>
+
+              <div className="premium-total-final">
+                <span>الصافي:</span>
+                <span>{formatMoney(sale.total)} ج.م</span>
               </div>
+
+              <div className="premium-payment-status">
+                <div className="premium-payment-row paid">
+                  <span><ArrowDownToLine size={16} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: '4px' }}/>المدفوع:</span>
+                  <span>{formatMoney(sale.paidAmount || 0)} ج.م</span>
+                </div>
+                <div className="premium-payment-row remaining">
+                  <span><Scale size={16} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: '4px' }}/>المتبقي:</span>
+                  <span>{formatMoney(sale.remainingAmount || 0)} ج.م</span>
+                </div>
+              </div>
+
+              {sale.customer && (
+                <div className="premium-customer-balance">
+                  <div className="premium-balance-row">
+                    <span title="الرصيد السابق مقدر بناءً على الرصيد الحالي والمتبقي من الفاتورة">الرصيد السابق (تقديري):</span>
+                    <span>{formatMoney((sale.customer.balance || 0) - (sale.remainingAmount || 0))} ج.م</span>
+                  </div>
+                  <div className="premium-balance-row current">
+                    <span>الرصيد الحالي للعميل:</span>
+                    <span>{formatMoney(sale.customer.balance || 0)} ج.م</span>
+                  </div>
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
     </div>
