@@ -57,6 +57,7 @@ import FirstRunSetup from './pages/FirstRunSetup';
 import ChatWidget from './components/ChatWidget';
 import SmartAssistant from './components/SmartAssistant';
 import FinancialDoctor from './components/FinancialDoctor';
+import UpdateNotification from './components/UpdateNotification';
 import { APP_NAVIGATE_EVENT, APP_OPEN_LICENSE_EVENT } from './utils/posEditorBridge';
 import { saveAppSettings } from './utils/appSettings';
 import { PermissionsProvider, usePermissions } from './context/PermissionsContext';
@@ -899,6 +900,8 @@ function App() {
         isOpen={isFinancialDoctorOpen}
         onClose={() => setIsFinancialDoctorOpen(false)}
       />
+
+      <UpdateNotification />
     </>
   );
 }

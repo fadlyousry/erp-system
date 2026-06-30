@@ -235,7 +235,14 @@ contextBridge.exposeInMainWorld('api', {
     // App Exit
     onExitRequested: (callback) => ipcRenderer.on('app:request-close', () => callback()),
     offExitRequested: () => ipcRenderer.removeAllListeners('app:request-close'),
-    confirmExit: (choice) => ipcRenderer.invoke('app:confirm-exit', choice)
+    confirmExit: (choice) => ipcRenderer.invoke('app:confirm-exit', choice),
+
+    // Auto-Update
+    checkForUpdate: () => ipcRenderer.invoke('update:check'),
+    downloadUpdate: () => ipcRenderer.invoke('update:download'),
+    installUpdate: () => ipcRenderer.invoke('update:install'),
+    onUpdateStatus: (callback) => ipcRenderer.on('update:status', (_event, data) => callback(data)),
+    offUpdateStatus: () => ipcRenderer.removeAllListeners('update:status')
 });
 
 contextBridge.exposeInMainWorld('licensing', {

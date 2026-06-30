@@ -54,6 +54,7 @@ const {
     writeSystemConfig
 } = require('./system-config')
 const { initializePrintHandlers } = require('./main/printHandler')
+const { setupAutoUpdater } = require('./auto-updater')
 
 if (app.isPackaged && process.resourcesPath) {
     const packagedNodeModules = [
@@ -2288,6 +2289,7 @@ app.whenReady().then(() => {
         if (!storedDatabase.configured && !systemConfig?.setupCompleted) {
             createWindow();
             registerActivateWindowHandler();
+            setupAutoUpdater(mainWindow);
             return;
         }
 
@@ -2310,6 +2312,7 @@ app.whenReady().then(() => {
         // Create main window BEFORE bootstrap to allow status window to work
         createWindow();
         registerActivateWindowHandler();
+        setupAutoUpdater(mainWindow);
 
         const bootstrapResult = await ensureDatabaseLayerReady();
 

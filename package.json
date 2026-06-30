@@ -1,6 +1,6 @@
 {
   "name": "fadl-erp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sales Manager desktop app for sales, purchases, inventory, and accounting.",
   "main": "electron/main.js",
   "scripts": {
@@ -26,6 +26,13 @@
     "postinstall": "prisma generate"
   },
   "build": {
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "fadlyousry",
+        "repo": "erp-system"
+      }
+    ],
     "appId": "com.fadltech.fadlerp",
     "productName": "fadl-erp",
     "directories": {
@@ -116,6 +123,7 @@
     "bwip-js": "^4.8.0",
     "cors": "^2.8.6",
     "electron-pos-printer": "^1.4.0",
+    "electron-updater": "^6.8.9",
     "express": "^5.2.1",
     "groq-sdk": "^1.2.0",
     "handlebars": "^4.7.9",
