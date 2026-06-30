@@ -1,4 +1,4 @@
-﻿* {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -41,6 +41,10 @@ body {
 .main-content,
 .purchase-page {
   min-width: 0;
+}
+
+.main-content {
+  position: relative;
 }
 
 /* Card Styling */
@@ -258,6 +262,7 @@ textarea:focus {
 
   .main-content {
     padding: 15px !important;
+    position: relative;
   }
 }
 
@@ -271,6 +276,7 @@ textarea:focus {
 
   .main-content {
     padding: 8px !important;
+    position: relative;
   }
 
   .card {

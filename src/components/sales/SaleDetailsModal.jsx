@@ -109,8 +109,8 @@ function SaleDetailsModal({ sale, onClose }) {
                       <td>{item.variant?.productSize || '-'}</td>
                       <td>{item.variant?.color || '-'}</td>
                       <td>{formatInteger(item.quantity)}</td>
-                      <td>{formatMoney(item.price)} ج.م</td>
-                      <td style={{ fontWeight: 'bold', color: '#0f172a' }}>{formatMoney((item.price || 0) * (item.quantity || 0))} ج.م</td>
+                      <td>{formatMoney(item.price)}</td>
+                      <td style={{ fontWeight: 'bold', color: '#0f172a' }}>{formatMoney((item.price || 0) * (item.quantity || 0))}</td>
                     </tr>
                   ))
                 )}
@@ -130,11 +130,11 @@ function SaleDetailsModal({ sale, onClose }) {
                 <div className="premium-customer-balance">
                   <div className="premium-balance-row">
                     <span title="الرصيد السابق مقدر بناءً على الرصيد الحالي والمتبقي من الفاتورة">الرصيد السابق (تقديري):</span>
-                    <span>{formatMoney((sale.customer.balance || 0) - (sale.remainingAmount || 0))} ج.م</span>
+                    <span>{formatMoney((sale.customer.balance || 0) - (sale.remainingAmount || 0))}</span>
                   </div>
                   <div className="premium-balance-row current">
                     <span>الرصيد الحالي للعميل:</span>
-                    <span>{formatMoney(sale.customer.balance || 0)} ج.م</span>
+                    <span>{formatMoney(sale.customer.balance || 0)}</span>
                   </div>
                 </div>
               )}
@@ -148,19 +148,19 @@ function SaleDetailsModal({ sale, onClose }) {
             <div className="premium-totals-card">
               <div className="premium-total-row">
                 <span>إجمالي الأصناف:</span>
-                <span>{formatMoney(totalItemsValue)} ج.م</span>
+                <span>{formatMoney(totalItemsValue)}</span>
               </div>
               
               {sale.discount > 0 && (
                 <div className="premium-total-row discount">
                   <span>خصم إضافي:</span>
-                  <span>- {formatMoney(sale.discount)} ج.م</span>
+                  <span>- {formatMoney(sale.discount)}</span>
                 </div>
               )}
               {sale.couponDiscount > 0 && (
                 <div className="premium-total-row coupon">
                   <span>خصم الكوبون ({sale.coupon?.code || 'نشط'}):</span>
-                  <span>- {formatMoney(sale.couponDiscount)} ج.م</span>
+                  <span>- {formatMoney(sale.couponDiscount)}</span>
                 </div>
               )}
 
@@ -168,17 +168,17 @@ function SaleDetailsModal({ sale, onClose }) {
 
               <div className="premium-total-final">
                 <span>الصافي:</span>
-                <span>{formatMoney(sale.total)} ج.م</span>
+                <span>{formatMoney(sale.total)}</span>
               </div>
 
               <div className="premium-payment-status">
                 <div className="premium-payment-row paid">
                   <span><ArrowDownToLine size={16} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: '4px' }}/>المدفوع:</span>
-                  <span>{formatMoney(sale.paidAmount || 0)} ج.م</span>
+                  <span>{formatMoney(sale.paidAmount || 0)}</span>
                 </div>
                 <div className="premium-payment-row remaining">
                   <span><Scale size={16} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: '4px' }}/>المتبقي:</span>
-                  <span>{formatMoney(sale.remainingAmount || 0)} ج.م</span>
+                  <span>{formatMoney(sale.remainingAmount || 0)}</span>
                 </div>
               </div>
             </div>
