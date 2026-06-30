@@ -1,7 +1,8 @@
 {
   "name": "fadl-erp",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Sales Manager desktop app for sales, purchases, inventory, and accounting.",
+  "author": "FYC-solutions",
   "main": "electron/main.js",
   "scripts": {
     "dev": "vite",

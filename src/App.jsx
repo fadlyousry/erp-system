@@ -533,7 +533,23 @@ function MainLayout({
               <line x1="21" y1="12" x2="9" y2="12" />
             </svg>
             {!isSidebarCollapsed && <span>تسجيل خروج</span>}
-          </button>
+        </div>
+
+        {/* Branding Footer */}
+        <div style={{
+          marginTop: 'auto',
+          padding: '10px 0',
+          textAlign: 'center',
+          fontSize: isSidebarCollapsed ? '9px' : '11px',
+          color: '#64748b',
+          borderTop: '1px solid #334155',
+          lineHeight: '1.4'
+        }}>
+          {!isSidebarCollapsed ? (
+            <>تم البرمجة والتطوير بواسطة<br /><strong style={{ color: '#94a3b8' }}>FYC-solutions</strong></>
+          ) : (
+            <strong style={{ color: '#94a3b8' }}>FYC</strong>
+          )}
         </div>
       </div>
 

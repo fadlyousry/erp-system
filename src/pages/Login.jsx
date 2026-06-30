@@ -536,7 +536,7 @@ export default function Login({ onLogin }) {
           </button>
         </form>
 
-        <div className="lp-footer">© 2026 Fadl Tech · ERP Solution</div>
+        <div className="lp-footer">تم البرمجة والتطوير بواسطة شركة FYC-solutions</div>
       </div>
 
       {showSettings && (
