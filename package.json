@@ -35,6 +35,7 @@
     ],
     "appId": "com.fadltech.fadlerp",
     "productName": "fadl-erp",
+    "artifactName": "${name}-Setup-${version}.${ext}",
     "directories": {
       "output": "release-build",
       "buildResources": "build"
