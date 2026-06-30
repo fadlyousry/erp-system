@@ -1,0 +1,502 @@
+/* ═══════════════════════════════════════════
+   BarcodeStudioModal – Slate Blue Theme
+   ═══════════════════════════════════════════ */
+
+.barcode-studio-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 200;
+  padding: 16px;
+  background: transparent;
+  backdrop-filter: none;
+  display: grid;
+  place-items: center;
+}
+
+.barcode-studio-modal {
+  direction: rtl;
+  width: min(1340px, 100%);
+  height: min(96vh, 820px);
+  overflow: hidden;
+  border-radius: 24px;
+  background: #ffffff;
+  border: 2px solid #64748b;
+  box-shadow: 0 35px 70px -10px rgba(15, 23, 42, 0.45), 0 15px 35px -15px rgba(15, 23, 42, 0.3);
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+}
+
+/* ── Header ── */
+.barcode-studio-header {
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f8fafc;
+}
+
+.barcode-studio-title h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+}
+
+.barcode-studio-title p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: rgba(226, 232, 240, 0.85);
+  font-weight: 600;
+}
+
+.barcode-studio-close {
+  border: 1px solid rgba(226, 232, 240, 0.25);
+  color: #f1f5f9;
+  background: rgba(15, 23, 42, 0.3);
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.barcode-studio-close:hover {
+  background: rgba(15, 23, 42, 0.6);
+  border-color: rgba(226, 232, 240, 0.5);
+  transform: translateY(-1px);
+}
+
+/* ── Product Manager (NEW) ── */
+.barcode-product-manager {
+  padding: 12px 20px;
+  background: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.barcode-search-wrap {
+  position: relative;
+  flex: 1;
+  max-width: 500px;
+}
+
+.barcode-search-input {
+  width: 100%;
+  padding: 10px 40px 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  font-size: 14px;
+  background: #fff;
+  transition: all 0.2s ease;
+}
+
+.barcode-search-input:focus {
+  outline: none;
+  border-color: #475569;
+  box-shadow: 0 0 0 3px rgba(71, 85, 105, 0.1);
+}
+
+.barcode-search-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+}
+
+.barcode-results-popover {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  margin-top: 8px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  z-index: 50;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.barcode-result-item {
+  padding: 10px 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: background 0.15s;
+}
+
+.barcode-result-item:hover {
+  background: #f8fafc;
+}
+
+.barcode-result-item:not(:last-child) {
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* ── Body ── */
+.barcode-studio-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ── Sidebar (Config) ── */
+.barcode-studio-config {
+  background: #fff;
+  border-left: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.barcode-tabs-nav {
+  display: flex;
+  padding: 12px;
+  background: #f8fbff;
+  border-bottom: 1px solid #e2e8f0;
+  gap: 8px;
+}
+
+.barcode-tab-trigger {
+  flex: 1;
+  padding: 8px 4px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #64748b;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.barcode-tab-trigger:hover {
+  background: #edf4fb;
+  color: #334155;
+}
+
+.barcode-tab-trigger.active {
+  background: #fff;
+  border-color: #cbd5e1;
+  color: #1e293b;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.barcode-config-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.barcode-config-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.barcode-config-section h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.barcode-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.barcode-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.barcode-field label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.barcode-field input,
+.barcode-field select {
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #1f2937;
+  transition: all 0.2s;
+}
+
+.barcode-field input:focus,
+.barcode-field select:focus {
+  outline: none;
+  border-color: #475569;
+  box-shadow: 0 0 0 3px rgba(71, 85, 105, 0.1);
+}
+
+.barcode-field-hint {
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.barcode-source-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.barcode-source-card {
+  padding: 12px;
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.barcode-source-card:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.barcode-source-card.selected {
+  background: #f0f9ff;
+  border-color: #0ea5e9;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.1);
+}
+
+.source-card-title {
+  font-size: 12px;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.barcode-source-card.selected .source-card-title {
+  color: #0284c7;
+}
+
+.source-card-desc {
+  font-size: 10px;
+  color: #64748b;
+  line-height: 1.3;
+}
+
+.barcode-toggles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.barcode-toggle-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+
+.barcode-toggle-item:hover {
+  background: #f1f5f9;
+}
+
+/* ── Preview Panel ── */
+.barcode-studio-view {
+  background: #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.barcode-view-toolbar {
+  padding: 12px 20px;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.barcode-view-info {
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+}
+
+.barcode-preview-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #e2e8f0;
+}
+
+.barcode-preview-container {
+  background: #fff;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  padding: 20px;
+  min-width: 400px;
+  display: grid;
+  place-items: center;
+  border-radius: 4px;
+}
+
+/* Linear rendering container styles */
+.barcode-labels-grid {
+  display: grid;
+  gap: 10px; /* Placeholder, will be overriden by JS inline styles for better accuracy if needed */
+}
+
+/* ── Footer ── */
+.barcode-studio-footer {
+  padding: 16px 24px;
+  background: #fff;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.barcode-footer-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.barcode-btn-primary {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 20px rgba(30, 41, 59, 0.25);
+  transition: all 0.2s ease;
+}
+
+.barcode-btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+
+.barcode-btn-light {
+  padding: 12px 20px;
+  background: #f1f5f9;
+  color: #334155;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.barcode-btn-light:hover:not(:disabled) {
+  background: #e2e8f0;
+}
+
+/* ── Mini Cards in Preview ── */
+.barcode-card-mini {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 180px;
+  position: relative;
+}
+
+.barcode-card-remove {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: none;
+  font-size: 10px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.barcode-card-mini:hover .barcode-card-remove {
+  opacity: 1;
+}
+
+.barcode-card-mini h5 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.barcode-card-mini .price {
+  font-size: 12px;
+  font-weight: 700;
+  color: #059669;
+}
+
+/* ── Animations ── */
+@keyframes studioFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes studioSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}

@@ -1,0 +1,14 @@
+
+> fadl-erp@1.0.0 dev
+> vite --host 127.0.0.1
+
+
+  [32m[1mVITE[22m v7.3.1[39m  [2mready in [0m[1m980[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5173[22m/[39m
+[2m16:35:36[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mrelease-build/win-unpacked/LICENSES.chromium.html[22m
+[2m16:35:47[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mrelease-build/win-unpacked/LICENSES.chromium.html[22m
+[2m16:35:48[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mrelease-build/win-unpacked/LICENSES.chromium.html[22m
+[2m16:42:52[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mrelease-build/win-unpacked/LICENSES.chromium.html[22m
+[2m16:43:03[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mrelease-build/win-unpacked/LICENSES.chromium.html[22m
+[2m16:43:03[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2mrelease-build/win-unpacked/LICENSES.chromium.html[22m

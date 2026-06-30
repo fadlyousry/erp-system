@@ -1,0 +1,144 @@
+{
+  "name": "fadl-erp",
+  "version": "1.0.0",
+  "description": "Sales Manager desktop app for sales, purchases, inventory, and accounting.",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "electron": "electron .",
+    "preelectron": "npm run prisma:generate",
+    "start": "npm run dev",
+    "test:products": "node --test tests/productUtils.test.mjs",
+    "app": "electron .",
+    "preapp": "npm run prisma:generate",
+    "seed": "node prisma/seed.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate:dev": "prisma migrate dev",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "prisma:migrate:status": "prisma migrate status",
+    "prisma:bootstrap": "node prisma/bootstrap.js",
+    "rebuild:customer-financials": "node scripts/rebuild-customer-financials.js",
+    "db:legacy:customer-financial-guard": "node scripts/legacy/legacy-customer-financial-guard.js",
+    "license:generate": "tsx scripts/generate-license.ts",
+    "dist": "npm run build && node scripts/prepare-dist.js && node scripts/obfuscate-main.js && electron-builder",
+    "dist:clean": "npm run build && node scripts/prepare-dist.js && node scripts/obfuscate-main.js && electron-builder --clean",
+    "postinstall": "prisma generate"
+  },
+  "build": {
+    "appId": "com.fadltech.fadlerp",
+    "productName": "fadl-erp",
+    "directories": {
+      "output": "release-build",
+      "buildResources": "build"
+    },
+    "artifactName": "${productName} Setup ${version}.${ext}",
+    "executableName": "fadl-erp",
+    "copyright": "Copyright (c) 2026 Fadl Tech",
+    "files": [
+      "dist/**/*",
+      {
+        "from": "dist/electron",
+        "to": "electron"
+      },
+      "printing/**/*",
+      "prisma/**/*",
+      "package.json",
+      "node_modules/.prisma/client/**/*"
+    ],
+    "asarUnpack": [
+      "node_modules/.prisma/client/**/*",
+      "node_modules/@prisma/engines/**/*",
+      "node_modules/prisma/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": ".env",
+        "to": ".env"
+      },
+      {
+        "from": "vendor",
+        "to": "vendor",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "prisma",
+        "to": "prisma",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "node_modules/.prisma",
+        "to": "node_modules/.prisma"
+      },
+      {
+        "from": "node_modules/@prisma/client",
+        "to": "node_modules/@prisma/client"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico",
+      "legalTrademarks": "fadl-erp"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "uninstallDisplayName": "fadl-erp",
+      "installerSidebar": "build/installerSidebar.bmp",
+      "uninstallerSidebar": "build/installerSidebar.bmp",
+      "installerHeader": "build/installerHeader.bmp",
+      "language": 1025,
+      "runAfterFinish": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Fadl ERP"
+    }
+  },
+  "keywords": [],
+  "author": {
+    "name": "Fadl Tech"
+  },
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@fontsource/cairo": "^5.2.7",
+    "@fontsource/tajawal": "^5.2.7",
+    "@fortawesome/fontawesome-free": "^7.1.0",
+    "@prisma/client": "^6.19.2",
+    "@vitejs/plugin-react": "^5.1.2",
+    "bcrypt": "^6.0.0",
+    "bwip-js": "^4.8.0",
+    "cors": "^2.8.6",
+    "electron-pos-printer": "^1.4.0",
+    "express": "^5.2.1",
+    "groq-sdk": "^1.2.0",
+    "handlebars": "^4.7.9",
+    "jsbarcode": "^3.12.3",
+    "jsonwebtoken": "^9.0.3",
+    "lucide-react": "^0.563.0",
+    "node-machine-id": "^1.1.12",
+    "prisma": "^6.19.2",
+    "qrcode": "^1.5.4",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-window": "^1.8.10",
+    "tweetnacl": "^1.0.3",
+    "tweetnacl-util": "^0.15.1",
+    "vite": "^7.3.1",
+    "whatsapp-web.js": "^1.34.6",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "electron": "^40.0.0",
+    "electron-builder": "^26.7.0",
+    "javascript-obfuscator": "^5.4.1",
+    "rollup-plugin-javascript-obfuscator": "^1.0.4",
+    "tsx": "^4.21.0"
+  }
+}

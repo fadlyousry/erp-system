@@ -1,0 +1,54 @@
+node_modules
+# Keep environment variables out of version control
+.env
+
+/generated/prisma
+
+# Electron build artifacts (do not push Windows installer files)
+release-build/
+release/
+
+# Old documentation files (keep only INSTALLATION_GUIDE.md and TROUBLESHOOTING.md)
+60_SECOND_SUMMARY.md
+ADDING_COLUMNS_GUIDE.md
+AFTER_FIX_STEPS.md
+ANSWERS_TO_YOUR_QUESTIONS.md
+BOOTSTRAP_SOLUTION_README.md
+BOOTSTRAP_TROUBLESHOOTING.md
+CHANGES_SUMMARY.md
+COMPLETED.md
+COMPREHENSIVE_FIX_SUMMARY.md
+DATABASE_*.md
+DB_*.md
+DEDICATED_POSTGRESQL_STRATEGY.md
+DEFERRED_IPC_HANDLERS_PATTERN.md
+DELIVERY_CHECKLIST.md
+DEVELOPMENT_CHECKLIST.md
+DOCUMENTATION_INDEX.md
+FILES_LIST.md
+FINAL_*.md
+FIX_*.md
+HELP_INDEX.md
+IMAGES_*.md
+IMMEDIATE_FIX_STEPS.md
+INDEX.md
+INSTALLATION_FLOWCHART.md
+INSTALLATION_LOGIC_EXPLAINED.md
+OPERATIONAL_NOTES.md
+POSTGRESQL_*.md
+PRINTING_SYSTEM.md
+QUICK_*.md
+README_*.md
+SESSION_SUMMARY.md
+SIMPLE_ANSWERS.md
+SOLUTION_SUMMARY.md
+START_HERE.md
+TODAY_*.md
+URGENT_FIX_PLAN.md
+
+# Large files and builds
+vendor/
+dist/
+.wwebjs_cache/
+build/*.bmp
+*.exe

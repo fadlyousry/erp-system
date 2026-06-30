@@ -1,0 +1,292 @@
+/* ══════════════════════════════════════════
+   Dashboard – root layout
+   Modern Blue/Navy Theme
+   ══════════════════════════════════════════ */
+.db-root {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+  padding: 8px 4px;
+  direction: rtl;
+  font-family: 'Tajawal', 'Cairo', sans-serif;
+}
+
+/* ══════════════════════════════════════════
+   Hero section
+   ══════════════════════════════════════════ */
+.db-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-radius: 24px;
+  padding: 32px 40px;
+  background:
+    radial-gradient(ellipse at 0% 0%, rgba(37, 99, 235, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 100% 100%, rgba(30, 41, 59, 0.05) 0%, transparent 40%),
+    linear-gradient(135deg, #f8fafc 0%, #f1f5f9 40%, #e2e8f0 100%);
+  border: 1px solid rgba(37, 99, 235, 0.1);
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+  flex-wrap: wrap;
+}
+
+.db-hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.db-hero-eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #2563eb;
+  margin: 0;
+}
+
+.db-hero-title {
+  margin: 0;
+  font-size: clamp(24px, 2.5vw, 32px);
+  font-weight: 900;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.db-hero-name {
+  color: #2563eb;
+}
+
+.db-hero-sub {
+  margin: 0;
+  font-size: 14.5px;
+  color: #64748b;
+}
+
+.db-hero-btns {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.db-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 24px;
+  border: none;
+  border-radius: 14px;
+  font-size: 14.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: none;
+}
+
+.db-btn:hover { }
+
+.db-btn-primary {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: #fff;
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
+}
+
+.db-btn-primary:hover {
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.3);
+}
+
+.db-btn-secondary {
+  background: #ffffff;
+  color: #1e293b;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.db-btn-secondary:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+}
+
+/* ══════════════════════════════════════════
+   Live Clock
+   ══════════════════════════════════════════ */
+.db-clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 24px 32px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+  min-width: 220px;
+}
+
+.db-clock-hm {
+  font-size: 48px;
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.db-clock-ss {
+  font-size: 24px;
+  font-weight: 700;
+  color: #64748b;
+  min-width: 28px;
+}
+
+.db-clock-period {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2563eb;
+  margin-right: 4px;
+}
+
+.db-clock-date {
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+/* ══════════════════════════════════════════
+   Section wrapper
+   ══════════════════════════════════════════ */
+.db-section {
+  background: #fff;
+  border-radius: 22px;
+  border: 1px solid #e2e8f0;
+  padding: 28px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+}
+
+.db-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.db-section-title {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 800;
+  color: #1e293b;
+}
+
+.db-section-sub {
+  margin: 4px 0 0;
+  font-size: 13.5px;
+  color: #64748b;
+}
+
+/* ══════════════════════════════════════════
+   Shortcut grid
+   ══════════════════════════════════════════ */
+.db-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 14px;
+}
+
+.db-card-btn {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: right;
+  border: 1.5px solid #f1f5f9;
+  border-radius: 18px;
+  background: #f8fafc;
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.db-card-btn:hover {
+  background: #fff;
+  border-color: #2563eb;
+  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.12);
+}
+
+.db-card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: #f1f5f9;
+  color: #1e293b;
+  transition: none;
+}
+
+.db-card-btn:hover .db-card-icon {
+  background: #2563eb;
+  color: #fff;
+}
+
+.db-card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.db-card-body strong {
+  color: #1e293b;
+  font-size: 14.5px;
+  font-weight: 700;
+}
+
+.db-card-body small {
+  color: #64748b;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.db-card-arrow {
+  color: #cbd5e1;
+  transition: none;
+}
+
+.db-card-btn:hover .db-card-arrow {
+  color: #2563eb;
+}
+
+/* ── Tone colours (icon backgrounds on hover) ───────── */
+.db-card-btn.tone-sales:hover     .db-card-icon { background: #2563eb; }
+.db-card-btn.tone-purchases:hover .db-card-icon { background: #3b82f6; }
+.db-card-btn.tone-customers:hover .db-card-icon { background: #0ea5e9; }
+.db-card-btn.tone-products:hover  .db-card-icon { background: #6366f1; }
+.db-card-btn.tone-returns:hover   .db-card-icon { background: #ef4444; }
+.db-card-btn.tone-finance:hover   .db-card-icon { background: #10b981; }
+.db-card-btn.tone-warehouse:hover .db-card-icon { background: #f59e0b; }
+.db-card-btn.tone-settings:hover  .db-card-icon { background: #64748b; }
+.db-card-btn.tone-logs:hover      .db-card-icon { background: #ec4899; }
+
+/* ══════════════════════════════════════════
+   Responsive
+   ══════════════════════════════════════════ */
+@media (max-width: 860px) {
+  .db-hero { padding: 24px; }
+  .db-clock { width: 100%; flex-direction: row; justify-content: space-between; padding: 16px 24px; }
+  .db-clock-hm { font-size: 36px; }
+}
+
+@media (max-width: 580px) {
+  .db-grid { grid-template-columns: 1fr; }
+  .db-hero-btns { width: 100%; }
+  .db-btn { width: 100%; }
+}

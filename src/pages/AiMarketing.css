@@ -1,0 +1,572 @@
+/* AI Smart Marketing Styling - FADL ERP */
+
+.ai-mkt-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 20px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ai-mkt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 15px;
+  margin-bottom: 5px;
+}
+
+.ai-mkt-header h1 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.ai-mkt-header-icon {
+  background: linear-gradient(135deg, #0ea5e9, #10b981);
+  color: white;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+.ai-mkt-connection-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.ai-mkt-connection-badge.connected {
+  background-color: #ecfdf5;
+  color: #059669;
+  border-color: #a7f3d0;
+}
+
+.ai-mkt-connection-badge.disconnected {
+  background-color: #fef2f2;
+  color: #dc2626;
+  border-color: #fecaca;
+  animation: pulseRed 2s infinite;
+}
+
+@keyframes pulseRed {
+  0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+}
+
+.ai-mkt-layout {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 20px;
+  height: calc(100vh - 120px);
+  min-height: 0;
+}
+
+/* LEFT COLUMN: Products Directory */
+.ai-mkt-sidebar-card {
+  background-color: white;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  height: 100%;
+  min-height: 0;
+}
+
+.ai-mkt-sidebar-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ai-mkt-search-wrapper {
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.ai-mkt-search-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  outline: none;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.ai-mkt-search-input:focus {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+}
+
+.ai-mkt-category-select {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  background-color: white;
+  font-size: 0.95rem;
+  margin-bottom: 16px;
+  outline: none;
+}
+
+.ai-mkt-products-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 4px;
+}
+
+.ai-mkt-product-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #f1f5f9;
+  background-color: #f8fafc;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ai-mkt-product-item:hover {
+  background-color: #f1f5f9;
+  border-color: #e2e8f0;
+  transform: translateY(-1px);
+}
+
+.ai-mkt-product-item.selected {
+  background-color: #f0f9ff;
+  border-color: #bae6fd;
+  box-shadow: 0 2px 10px rgba(14, 165, 233, 0.08);
+}
+
+.ai-mkt-product-item-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.ai-mkt-product-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #1e293b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px;
+}
+
+.ai-mkt-product-price {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0ea5e9;
+}
+
+.ai-mkt-product-stock-badge {
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.ai-mkt-product-stock-badge.ok {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.ai-mkt-product-stock-badge.warning {
+  background-color: #fef9c3;
+  color: #a16207;
+}
+
+.ai-mkt-product-stock-badge.empty {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.ai-mkt-loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+  color: #64748b;
+  gap: 12px;
+}
+
+/* RIGHT COLUMN: AI Creator Workspace */
+.ai-mkt-workspace {
+  background-color: white;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Column inside Workspace: Parameters & Generation */
+.ai-mkt-workspace-pane {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-left: 1px solid #f1f5f9;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.ai-mkt-workspace-pane:last-child {
+  border-left: none;
+}
+
+.ai-mkt-pane-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ai-mkt-section-card {
+  background-color: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ai-mkt-section-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #334155;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ai-mkt-textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  resize: vertical;
+  min-height: 80px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.ai-mkt-textarea:focus {
+  border-color: #0ea5e9;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+}
+
+.ai-mkt-generate-btn {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.25);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ai-mkt-generate-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(14, 165, 233, 0.35);
+}
+
+.ai-mkt-generate-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* WhatsApp Mockup Chat Window */
+.ai-mkt-wa-window {
+  background-color: #efeae2;
+  background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+  background-repeat: repeat;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 250px;
+  flex: 1;
+  position: relative;
+  box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.ai-mkt-wa-bubble {
+  background-color: white;
+  border-radius: 12px 0 12px 12px;
+  padding: 12px;
+  max-width: 90%;
+  align-self: flex-start;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  position: relative;
+  font-size: 0.95rem;
+  color: #111b21;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  animation: scaleIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.ai-mkt-wa-bubble::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -8px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid white;
+  border-left: 10px solid transparent;
+}
+
+.ai-mkt-wa-time {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: #667781;
+  margin-top: 6px;
+  text-align: left;
+}
+
+.ai-mkt-wa-editor {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 2px solid #059669;
+  background-color: #fff;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #111b21;
+  line-height: 1.45;
+  outline: none;
+  resize: vertical;
+  min-height: 140px;
+}
+
+.ai-mkt-wa-editor:focus {
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
+}
+
+/* Campaign Launch Section */
+.ai-mkt-launch-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ai-mkt-tabs {
+  display: flex;
+  border-bottom: 2px solid #f1f5f9;
+  gap: 12px;
+}
+
+.ai-mkt-tab {
+  padding: 10px 16px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #64748b;
+  border: none;
+  background: transparent;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ai-mkt-tab:hover {
+  color: #0ea5e9;
+}
+
+.ai-mkt-tab.active {
+  color: #0ea5e9;
+  border-bottom-color: #0ea5e9;
+}
+
+.ai-mkt-tab-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.ai-mkt-send-btn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ai-mkt-send-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
+}
+
+.ai-mkt-send-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Bulk progress overlay style */
+.ai-mkt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(15, 23, 42, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  backdrop-filter: blur(4px);
+}
+
+.ai-mkt-progress-modal {
+  background-color: white;
+  border-radius: 20px;
+  padding: 30px;
+  width: 90%;
+  max-width: 480px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  text-align: center;
+  direction: rtl;
+}
+
+.ai-mkt-progress-bar-container {
+  width: 100%;
+  height: 12px;
+  background-color: #e2e8f0;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+.ai-mkt-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981, #059669);
+  border-radius: 20px;
+  transition: width 0.3s ease;
+}
+
+.ai-mkt-progress-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 16px;
+  font-size: 1rem;
+}
+
+.ai-mkt-stat-ok {
+  color: #059669;
+  font-weight: bold;
+}
+
+.ai-mkt-stat-fail {
+  color: #dc2626;
+  font-weight: bold;
+}
+
+.ai-mkt-results-list {
+  max-height: 150px;
+  overflow-y: auto;
+  margin-top: 15px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #f8fafc;
+}
+
+.ai-mkt-result-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.85rem;
+}
+
+.ai-mkt-result-row:last-child {
+  border-bottom: none;
+}
+
+/* Responsive adjustment */
+@media (max-width: 1100px) {
+  .ai-mkt-layout {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+  .ai-mkt-workspace {
+    grid-template-columns: 1fr;
+  }
+  .ai-mkt-sidebar-card {
+    height: 400px;
+  }
+}
