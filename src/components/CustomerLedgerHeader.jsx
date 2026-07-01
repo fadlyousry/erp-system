@@ -88,17 +88,17 @@ export default function CustomerLedgerHeader({
         </div>
 
         <div className="customer-ledger-actions">
-          <button onClick={onOpenSmartInsight} className="ledger-btn ledger-btn-insight">
-            التقييم الذكي {smartScore}/100
-          </button>
-          <button onClick={() => onEditCustomer && onEditCustomer(customer)} className="ledger-btn ledger-btn-insight" style={{ background: '#f59e0b', borderColor: '#d97706' }}>
+          <button onClick={() => onEditCustomer && onEditCustomer(customer)} className="ledger-btn ledger-btn-accent">
             تعديل البيانات
-          </button>
-          <button onClick={onPrintLedger} className="ledger-btn ledger-btn-primary">
-            طباعة الكشف
           </button>
           <button onClick={onPrintDetailedLedger} className="ledger-btn ledger-btn-accent">
             تقرير تفصيلي A4
+          </button>
+          <button onClick={onOpenSmartInsight} className="ledger-btn ledger-btn-insight">
+            التقييم الذكي {smartScore}/100
+          </button>
+          <button onClick={onPrintLedger} className="ledger-btn ledger-btn-primary">
+            طباعة الكشف
           </button>
           <button onClick={onClose} className="ledger-btn ledger-btn-secondary">
             إغلاق

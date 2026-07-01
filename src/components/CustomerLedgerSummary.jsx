@@ -46,7 +46,7 @@ export default function CustomerLedgerSummary({ customer, transactions }) {
       label: "الحد الائتماني",
       value: formatCurrency(customer?.creditLimit || 0),
       type: "accent",
-      gradient: "linear-gradient(180deg, #fde68a, #d97706)",
+      gradient: "linear-gradient(180deg, #93c5fd, #2563eb)",
     },
     {
       icon: <Hash size={18} />,

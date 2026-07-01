@@ -207,43 +207,46 @@
 }
 
 .ledger-btn-primary {
-  background: #2563eb;
+  background: linear-gradient(135deg, #008ae6 0%, #007bb5 100%);
   color: #ffffff;
-  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 138, 230, 0.3);
 }
 
 .ledger-btn-primary:hover {
-  background: #1d4ed8;
+  background: linear-gradient(135deg, #007bb5 0%, #006b9e 100%);
 }
 
 .ledger-btn-insight {
-  background: #0891b2;
+  background: linear-gradient(135deg, #03273fff 0%, #002a5aff 100%);
   color: #ffffff;
-  box-shadow: 0 10px 24px rgba(8, 145, 178, 0.2);
+  box-shadow: 0 4px 12px rgba(3, 39, 63, 0.3);
 }
 
 .ledger-btn-insight:hover {
-  background: #0e7490;
+  background: linear-gradient(135deg, #002a5aff 0%, #001f40 100%);
 }
 
 .ledger-btn-accent {
-  background: #0f766e;
-  color: #ffffff;
-  box-shadow: 0 10px 24px rgba(15, 118, 110, 0.18);
+  background: #ffffff;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .ledger-btn-accent:hover {
-  background: #115e59;
+  background: #f8fafc;
+  border-color: #94a3b8;
 }
 
 .ledger-btn-secondary {
-  background: #334155;
+  background: linear-gradient(135deg, #64748b 0%, #475569 100%);
   color: #ffffff;
-  box-shadow: 0 10px 24px rgba(51, 65, 85, 0.18);
+  border: none;
+  box-shadow: 0 4px 12px rgba(71, 85, 105, 0.3);
 }
 
 .ledger-btn-secondary:hover {
-  background: #1e293b;
+  background: linear-gradient(135deg, #475569 0%, #334155 100%);
 }
 
 .ledger-btn-light {
@@ -814,12 +817,12 @@
 }
 
 .ledger-action-btn.is-print {
-  background: linear-gradient(180deg, #3b82f6, #2563eb);
+  background: linear-gradient(135deg, #008ae6 0%, #007bb5 100%);
   color: #ffffff;
 }
 
 .ledger-action-btn.is-receipt {
-  background: linear-gradient(180deg, #e6872e, #99721d);
+  background: linear-gradient(135deg, #03273fff 0%, #002a5aff 100%);
   color: #ffffff;
 }
 
