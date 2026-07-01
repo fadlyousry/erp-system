@@ -399,8 +399,8 @@ const InvoiceTab = ({ invoice, isActive, onSelect, onClose, canClose }) => {
             onClick={onSelect}
             style={{
                 padding: "8px 15px",
-                backgroundColor: isActive ? "#2563eb" : "#e5e7eb",
-                color: isActive ? "white" : "#374151",
+                background: isActive ? "linear-gradient(135deg, #008ae6 0%, #007bb5 100%)" : "linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)",
+                color: isActive ? "white" : "#475569",
                 borderRadius: "8px",
                 cursor: "pointer",
                 display: "flex",
@@ -2566,13 +2566,14 @@ export default function EnhancedPOS() {
                         onClick={addTab}
                         style={{
                             padding: "8px 12px",
-                            backgroundColor: "#10b981",
+                            background: "linear-gradient(135deg, #03273fff 0%, #002a5aff 100%)",
                             color: "white",
                             border: "none",
                             borderRadius: "8px",
                             cursor: "pointer",
                             fontSize: "18px",
                             fontWeight: "bold",
+                            boxShadow: "0 4px 12px rgba(3, 39, 63, 0.3)"
                         }}
                     >
                         +
@@ -2687,7 +2688,7 @@ export default function EnhancedPOS() {
                                     borderRadius: "6px",
                                     border: "none",
                                     backgroundColor: searchMode === "name" ? "white" : "transparent",
-                                    color: searchMode === "name" ? "#3b82f6" : "#6b7280",
+                                    color: searchMode === "name" ? "#008ae6" : "#6b7280",
                                     cursor: "pointer",
                                     fontWeight: "bold",
                                     boxShadow: searchMode === "name" ? "0 1px 2px rgba(0,0,0,0.1)" : "none",
@@ -2705,7 +2706,7 @@ export default function EnhancedPOS() {
                                     borderRadius: "6px",
                                     border: "none",
                                     backgroundColor: searchMode === "barcode" ? "white" : "transparent",
-                                    color: searchMode === "barcode" ? "#dc2626" : "#6b7280",
+                                    color: searchMode === "barcode" ? "#008ae6" : "#6b7280",
                                     cursor: "pointer",
                                     fontWeight: "bold",
                                     boxShadow: searchMode === "barcode" ? "0 1px 2px rgba(0,0,0,0.1)" : "none",
@@ -3604,14 +3605,14 @@ export default function EnhancedPOS() {
                                         flex: 1,
                                         minHeight: "44px",
                                         padding: "10px 14px",
-                                        backgroundColor: activeInvoice.cart.length === 0 ? "#93c5fd" : "#2563eb",
-                                        color: "white",
+                                        background: activeInvoice.cart.length === 0 ? "#e2e8f0" : "linear-gradient(135deg, #008ae6 0%, #007bb5 100%)",
+                                        color: activeInvoice.cart.length === 0 ? "#94a3b8" : "white",
                                         border: "none",
                                         borderRadius: "7px",
                                         fontSize: "13px",
                                         fontWeight: "700",
                                         cursor: activeInvoice.cart.length === 0 ? "not-allowed" : "pointer",
-                                        boxShadow: activeInvoice.cart.length === 0 ? "none" : "0 6px 14px rgba(37, 99, 235, 0.22)",
+                                        boxShadow: activeInvoice.cart.length === 0 ? "none" : "0 6px 14px rgba(0, 138, 230, 0.3)",
                                         display: "inline-flex",
                                         alignItems: "center",
                                         justifyContent: "center",
@@ -3627,14 +3628,14 @@ export default function EnhancedPOS() {
                                         flex: 1,
                                         minHeight: "44px",
                                         padding: "10px 14px",
-                                        backgroundColor: activeInvoice.cart.length === 0 ? "#f8fafc" : "#ffffff",
-                                        color: activeInvoice.cart.length === 0 ? "#94a3b8" : "#334155",
-                                        border: "1px solid #e5e7eb",
+                                        background: activeInvoice.cart.length === 0 ? "#e2e8f0" : "linear-gradient(135deg, #475569 0%, #334155 100%)",
+                                        color: activeInvoice.cart.length === 0 ? "#94a3b8" : "white",
+                                        border: "none",
                                         borderRadius: "7px",
                                         fontSize: "13px",
                                         fontWeight: "700",
                                         cursor: activeInvoice.cart.length === 0 ? "not-allowed" : "pointer",
-                                        boxShadow: "0 1px 2px rgba(15, 23, 42, 0.04)",
+                                        boxShadow: activeInvoice.cart.length === 0 ? "none" : "0 6px 14px rgba(51, 65, 85, 0.3)",
                                         display: "inline-flex",
                                         alignItems: "center",
                                         justifyContent: "center",
@@ -3706,8 +3707,8 @@ export default function EnhancedPOS() {
                                 <div
                                     style={{
                                         flex: 1,
-                                        backgroundColor: "#dcfce7",
-                                        border: "1px dashed #86efac",
+                                        backgroundColor: "#eff6ff",
+                                        border: "1px dashed #bfdbfe",
                                         borderRadius: "6px",
                                         padding: "8px",
                                         display: "flex",
@@ -3725,7 +3726,7 @@ export default function EnhancedPOS() {
                                             background: "none",
                                             border: "none",
                                             cursor: "pointer",
-                                            color: "#166534",
+                                            color: "#1d4ed8",
                                             fontWeight: "bold",
                                             fontSize: "13px",
                                         }}
@@ -3734,7 +3735,7 @@ export default function EnhancedPOS() {
                                         <span>عرض الربح</span>
                                     </button>
                                     {showInvoiceDetails && (
-                                        <span style={{ fontWeight: "bold", fontSize: "15px", color: "#15803d" }}>
+                                        <span style={{ fontWeight: "bold", fontSize: "15px", color: "#1e3a8a" }}>
                                             {calculations.profit.toFixed(2)}
                                         </span>
                                     )}

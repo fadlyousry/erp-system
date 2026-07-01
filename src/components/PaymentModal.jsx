@@ -257,12 +257,18 @@ export default function PaymentModal({
             fontSize: 14,
         },
         amountInput: {
-            fontSize: 22,
-            fontWeight: "bold",
+            fontSize: 42,
+            fontWeight: "900",
             textAlign: "center",
-            border: "2px solid #008ae6",
+            border: "none",
+            borderBottom: "3px solid #008ae6",
+            borderRadius: 0,
             outline: "none",
             color: "#007bb5",
+            background: "transparent",
+            padding: "0 10px",
+            width: "200px",
+            fontFamily: "monospace"
         },
         btnPrimary: {
             flex: 1,
@@ -337,27 +343,10 @@ export default function PaymentModal({
 
                 <div style={{ padding: 20 }}>
                     {/* Customer */}
-                    <div
-                        style={{
-                            display: "grid",
-                            gridTemplateColumns: "1fr 1fr",
-                            gap: 12,
-                            background: "#f0f7ff",
-                            padding: 14,
-                            borderRadius: 8,
-                            marginBottom: 18,
-                        }}
-                    >
-                        <div>
-                            <div style={{ fontSize: 11, color: "#666" }}>العميل</div>
-                            <strong style={{ display: 'block', fontSize: 16, color: '#111' }}>{selectedCustomer.name}</strong>
-                        </div>
-                        <div style={{ textAlign: "left" }}>
-                            <div style={{ fontSize: 11, color: "#666" }}>الرصيد السابق</div>
-                            <strong style={{ display: 'block', fontSize: 16, color: (Number(selectedCustomer.balance) > 0 ? '#dc2626' : Number(selectedCustomer.balance) === 0 ? '#059669' : '#2563eb') }}>
-                                {formatPlainNumber(selectedCustomer.balance)}
-                            </strong>
-                        </div>
+                    {/* Customer Info */}
+                    <div style={{ textAlign: "center", marginBottom: 15 }}>
+                        <div style={{ fontSize: 13, color: "#64748b", fontWeight: 600 }}>العميل</div>
+                        <div style={{ fontSize: 20, color: "#1e293b", fontWeight: 800 }}>{selectedCustomer.name}</div>
                     </div>
 
                     {/* Missing Phone Alert */}
@@ -370,118 +359,141 @@ export default function PaymentModal({
                             marginBottom: 15,
                             display: 'flex',
                             alignItems: 'center',
+                            justifyContent: 'center',
                             gap: 10,
                             color: '#92400e',
                             fontSize: 13,
                             fontWeight: 600
                         }}>
                             <span style={{ fontSize: 18 }}>⚠️</span>
-                            <span>تنبيه: هذا العميل ليس له رقم هاتف مسجل </span>
+                            <span>تنبيه: هذا العميل ليس له رقم هاتف مسجل</span>
                         </div>
                     )}
 
-                    {/* Amount (label beside input) */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 6 }}>
-                        <div style={{ minWidth: 120 }}>
-                            <div style={{ ...styles.label, marginBottom: 0 }}>المبلغ المستلم *</div>
-                        </div>
-                        <div style={{ flex: 1 }}>
+                    {/* Amount Hero */}
+                    <div style={{ 
+                        background: '#f8fafc',
+                        border: '1px solid #e2e8f0',
+                        borderRadius: 16,
+                        padding: '20px 15px',
+                        marginBottom: 15,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 10
+                    }}>
+                        <div style={{ fontSize: 14, color: "#475569", fontWeight: 700 }}>المبلغ المستلم</div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                             <input
                                 ref={amountRef}
                                 type="number"
                                 value={amount}
                                 onChange={(e) => setAmount(e.target.value)}
-                                style={{ ...styles.input, ...styles.amountInput }}
+                                style={styles.amountInput}
+                                placeholder="0"
                             />
                         </div>
                     </div>
 
-                    {/* Payment Method & Date */}
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginTop: 14 }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        
-                            <div style={{ flex: 1 }}>
-                                <select
-                                    value={paymentMethod}
-                                    onChange={(e) => setPaymentMethod(e.target.value)}
-                                    style={{
-                                        ...styles.input,
-                                        fontSize: 14,
-                                        cursor: 'pointer',
-                                    }}
-                                >
-                                    {safePaymentMethods.map((method) => (
-                                        <option key={method.id} value={String(method.id)}>
-                                            {method.name}
-                                        </option>
-                                    ))}
-                                </select>
+                    {/* Math Card */}
+                    <div style={{ 
+                        display: "flex", 
+                        alignItems: "center", 
+                        justifyContent: "space-between",
+                        background: "#f0f7ff", 
+                        padding: "12px 16px", 
+                        borderRadius: 12, 
+                        marginBottom: 15,
+                        border: "1px solid #bfdbfe"
+                    }}>
+                        <div style={{ textAlign: "center" }}>
+                            <div style={{ fontSize: 11, color: "#64748b", fontWeight: 600 }}>الرصيد السابق</div>
+                            <div style={{ fontSize: 15, fontWeight: "bold", color: Number(selectedCustomer.balance) > 0 ? '#dc2626' : '#2563eb' }}>
+                                {formatPlainNumber(selectedCustomer.balance)}
                             </div>
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  
-                            <div style={{ flex: 1 }}>
-                                <input
-                                    type="date"
-                                    value={date}
-                                    onChange={(e) => setDate(e.target.value)}
-                                    style={styles.input}
-                                />
+                        <div style={{ fontSize: 18, color: "#94a3b8", fontWeight: "bold" }}>-</div>
+                        <div style={{ textAlign: "center" }}>
+                            <div style={{ fontSize: 11, color: "#64748b", fontWeight: 600 }}>الدفعة</div>
+                            <div style={{ fontSize: 15, fontWeight: "bold", color: "#008ae6" }}>
+                                {amount || "0"}
                             </div>
+                        </div>
+                        <div style={{ fontSize: 18, color: "#94a3b8", fontWeight: "bold" }}>=</div>
+                        <div style={{ textAlign: "center" }}>
+                            <div style={{ fontSize: 11, color: "#64748b", fontWeight: 600 }}>الرصيد المتبقي</div>
+                            <div style={{ fontSize: 15, fontWeight: "bold", color: balanceColor }}>
+                                {formatPlainNumber(newBalance)}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Payment Method & Date */}
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginBottom: 15 }}>
+                        <div style={{ position: "relative" }}>
+                            <div style={{ ...styles.label, marginBottom: 4 }}>طريقة الدفع</div>
+                            <select
+                                value={paymentMethod}
+                                onChange={(e) => setPaymentMethod(e.target.value)}
+                                style={{ ...styles.input, fontSize: 14, cursor: 'pointer', paddingRight: 32 }}
+                            >
+                                {safePaymentMethods.map((method) => (
+                                    <option key={method.id} value={String(method.id)}>{method.name}</option>
+                                ))}
+                            </select>
+                            <span style={{ position: "absolute", right: 10, top: 32, fontSize: 16 }}>💳</span>
+                        </div>
+                        <div style={{ position: "relative" }}>
+                            <div style={{ ...styles.label, marginBottom: 4 }}>التاريخ</div>
+                            <input
+                                type="date"
+                                value={date}
+                                onChange={(e) => setDate(e.target.value)}
+                                style={{ ...styles.input, paddingRight: 32 }}
+                            />
+                            <span style={{ position: "absolute", right: 10, top: 32, fontSize: 16 }}>📅</span>
                         </div>
                     </div>
 
                     {/* Notes */}
-                    <label style={{ ...styles.label, marginTop: 14 }}>ملاحظات</label>
-                    <textarea
-                        rows={3}
-                        value={notes}
-                        onChange={(e) => setNotes(e.target.value)}
-                        style={{ ...styles.input, resize: "none" }}
-                    />
-
-                    {/* Balance After */}
-                    <div style={{ marginTop: 14, padding: 12, background: "#f0f7ff", borderRadius: 8, textAlign: 'center' }}>
-                        <div style={{ fontSize: 11, color: "#666", marginBottom: 6 }}>الرصيد الحالي</div>
-                        <div
-                            style={{
-                                fontSize: 18,
-                                fontWeight: "bold",
-                                color: balanceColor,
-                            }}
-                        >
-                            {formatPlainNumber(newBalance)}
-                        </div>
+                    <div style={{ marginBottom: 15 }}>
+                        <label style={{ ...styles.label, marginBottom: 4 }}>ملاحظات (اختياري)</label>
+                        <input
+                            type="text"
+                            value={notes}
+                            onChange={(e) => setNotes(e.target.value)}
+                            style={{ ...styles.input, background: "#f8fafc" }}
+                            placeholder="اكتب ملاحظاتك هنا..."
+                        />
                     </div>
 
-                    {/* Unified alert (validation / info / shortcuts) */}
-                    <div style={{ marginTop: 14 }}>
-                        {alert.message ? (
-                            <div
-                                style={{
-                                    ...styles.alertBase,
-                                    ...(alert.type === 'error' ? styles.alertError : alert.type === 'success' ? styles.alertSuccess : styles.alertInfo)
-                                }}
-                            >
-                                <div style={{ fontWeight: 700 }}>{alert.type === 'error' ? 'خطأ' : alert.type === 'success' ? 'تم' : 'معلومة'}</div>
-                                <div style={{ flex: 1 }}>{alert.message}</div>
-                            </div>
-                        ) : (
-                            <div style={{ ...styles.alertBase, ...styles.alertInfo }}>
-                                <div style={{ fontWeight: 700 }}>اختصارات</div>
-                                <div style={{ flex: 1 }}>F1: حفظ • Enter / F2: حفظ وطباعة • ESC: خروج</div>
-                            </div>
-                        )}
-
-                        {/* Actions */}
-                        <div style={{ display: "flex", gap: 10, marginTop: 8 }}>
-                            <button onClick={() => submitAndMaybePrint(false)} style={styles.btnPrimary}>
-                                <Save size={18} /> حفظ (F1)
-                            </button>
-                            <button onClick={() => submitAndMaybePrint(true)} style={styles.btnSecondary}>
-                                <Printer size={18} /> حفظ وطباعة (Enter / F2)
-                            </button>
+                    {/* Alerts */}
+                    {alert.message && (
+                        <div
+                            style={{
+                                ...styles.alertBase,
+                                ...(alert.type === 'error' ? styles.alertError : alert.type === 'success' ? styles.alertSuccess : styles.alertInfo),
+                                marginBottom: 15
+                            }}
+                        >
+                            <div style={{ fontWeight: 700 }}>{alert.type === 'error' ? 'خطأ' : alert.type === 'success' ? 'تم' : 'معلومة'}</div>
+                            <div style={{ flex: 1 }}>{alert.message}</div>
                         </div>
+                    )}
+
+                    {/* Actions */}
+                    <div style={{ display: "flex", gap: 12 }}>
+                        <button onClick={() => submitAndMaybePrint(false)} style={styles.btnPrimary}>
+                            <Save size={18} /> 
+                            <span>حفظ</span>
+                            <span style={{ background: "rgba(255,255,255,0.2)", fontSize: 11, padding: "2px 6px", borderRadius: 4, marginLeft: 4 }}>F1</span>
+                        </button>
+                        <button onClick={() => submitAndMaybePrint(true)} style={styles.btnSecondary}>
+                            <Printer size={18} /> 
+                            <span>حفظ وطباعة</span>
+                            <span style={{ background: "rgba(255,255,255,0.2)", fontSize: 11, padding: "2px 6px", borderRadius: 4, marginLeft: 4 }}>F2</span>
+                        </button>
                     </div>
                 </div>
             </div>

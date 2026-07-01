@@ -344,8 +344,8 @@ const InvoiceTab = ({ invoice, isActive, onSelect, onClose, canClose }) => {
             onClick={onSelect}
             style={{
                 padding: "8px 15px",
-                backgroundColor: isActive ? "#f97316" : "#ffedd5",
-                color: isActive ? "white" : "#9a3412",
+                background: isActive ? "linear-gradient(135deg, #03273fff 0%, #002a5aff 100%)" : "linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)",
+                color: isActive ? "white" : "#475569",
                 borderRadius: "8px",
                 cursor: "pointer",
                 display: "flex",
@@ -353,7 +353,7 @@ const InvoiceTab = ({ invoice, isActive, onSelect, onClose, canClose }) => {
                 gap: "8px",
                 minWidth: "120px",
                 justifyContent: "space-between",
-                boxShadow: isActive ? "0 4px 8px -1px rgba(249, 115, 22, 0.45)" : "none",
+                boxShadow: isActive ? "0 4px 8px -1px rgba(3, 39, 63, 0.45)" : "none",
                 transition: "all 0.2s",
             }}
         >
@@ -2410,13 +2410,14 @@ export default function Purchases() {
                         onClick={addTab}
                         style={{
                             padding: "8px 12px",
-                            backgroundColor: "#10b981",
+                            background: "linear-gradient(135deg, #008ae6 0%, #007bb5 100%)",
                             color: "white",
                             border: "none",
                             borderRadius: "8px",
                             cursor: "pointer",
                             fontSize: "18px",
                             fontWeight: "bold",
+                            boxShadow: "0 4px 12px rgba(0, 138, 230, 0.3)"
                         }}
                     >
                         +
@@ -2432,12 +2433,12 @@ export default function Purchases() {
                         gap: "8px",
                         padding: "10px 16px",
                         backgroundColor: "white",
-                        color: "#c2410c",
-                        border: "1px solid #fed7aa",
+                        color: "#1d4ed8",
+                        border: "1px solid #dbeafe",
                         borderRadius: "12px",
                         cursor: "pointer",
                         fontWeight: "bold",
-                        boxShadow: "0 6px 16px rgba(249, 115, 22, 0.08)",
+                        boxShadow: "0 6px 16px rgba(37, 99, 235, 0.08)",
                     }}
                     title="عرض كل الاختصارات"
                 >
@@ -3494,21 +3495,26 @@ export default function Purchases() {
                             </div>
 
                             {/* Action Buttons (Moved Here) */}
-                            <div style={{ display: "flex", gap: "10px", marginTop: "0px" }}>
+                            <div style={{ display: "flex", gap: "8px", marginTop: "0px" }}>
                                 <button
                                     onClick={() => handleCheckout(false)}
                                     disabled={activeInvoice.cart.length === 0}
                                     style={{
                                         flex: 1,
-                                        padding: "14px", // Increased padding
-                                        backgroundColor: activeInvoice.cart.length === 0 ? "#9ca3af" : "#3b82f6",
-                                        color: "white",
+                                        minHeight: "44px",
+                                        padding: "10px 14px",
+                                        background: activeInvoice.cart.length === 0 ? "#e2e8f0" : "linear-gradient(135deg, #008ae6 0%, #007bb5 100%)",
+                                        color: activeInvoice.cart.length === 0 ? "#94a3b8" : "white",
                                         border: "none",
-                                        borderRadius: "6px",
-                                        fontSize: "14px", // Increased font size slightly
-                                        fontWeight: "bold",
+                                        borderRadius: "7px",
+                                        fontSize: "13px",
+                                        fontWeight: "700",
                                         cursor: activeInvoice.cart.length === 0 ? "not-allowed" : "pointer",
-                                        boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                                        boxShadow: activeInvoice.cart.length === 0 ? "none" : "0 6px 14px rgba(0, 138, 230, 0.3)",
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        gap: "8px",
                                     }}
                                 >
                                     حفظ (F1)
@@ -3518,15 +3524,20 @@ export default function Purchases() {
                                     disabled={activeInvoice.cart.length === 0}
                                     style={{
                                         flex: 1,
-                                        padding: "16px", // Increased padding
-                                        backgroundColor: activeInvoice.cart.length === 0 ? "#9ca3af" : "#10b981",
-                                        color: "white",
+                                        minHeight: "44px",
+                                        padding: "10px 14px",
+                                        background: activeInvoice.cart.length === 0 ? "#e2e8f0" : "linear-gradient(135deg, #475569 0%, #334155 100%)",
+                                        color: activeInvoice.cart.length === 0 ? "#94a3b8" : "white",
                                         border: "none",
-                                        borderRadius: "6px",
-                                        fontSize: "14px", // Increased font size slightly
-                                        fontWeight: "bold",
+                                        borderRadius: "7px",
+                                        fontSize: "13px",
+                                        fontWeight: "700",
                                         cursor: activeInvoice.cart.length === 0 ? "not-allowed" : "pointer",
-                                        boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                                        boxShadow: activeInvoice.cart.length === 0 ? "none" : "0 6px 14px rgba(51, 65, 85, 0.3)",
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        gap: "8px",
                                     }}
                                 >
                                     حفظ وطباعة (F2)
@@ -3534,24 +3545,26 @@ export default function Purchases() {
                                 <button
                                     onClick={() => handleCheckout(false, true)}
                                     disabled={activeInvoice.cart.length === 0}
-
                                     style={{
                                         flex: 1,
-                                        padding: "14px", // Increased padding
-                                        backgroundColor: activeInvoice.cart.length === 0 ? "#9ca3af" : "#f59e0b",
-                                        color: "white",
+                                        minHeight: "44px",
+                                        padding: "10px 14px",
+                                        background: activeInvoice.cart.length === 0 ? "#e2e8f0" : "linear-gradient(135deg, #64748b 0%, #475569 100%)",
+                                        color: activeInvoice.cart.length === 0 ? "#94a3b8" : "white",
                                         border: "none",
-                                        borderRadius: "6px",
-                                        fontSize: "14px", // Increased font size slightly
-                                        fontWeight: "bold",
+                                        borderRadius: "7px",
+                                        fontSize: "13px",
+                                        fontWeight: "700",
                                         cursor: activeInvoice.cart.length === 0 ? "not-allowed" : "pointer",
-                                        boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+                                        boxShadow: activeInvoice.cart.length === 0 ? "none" : "0 6px 14px rgba(71, 85, 105, 0.3)",
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        gap: "8px",
                                     }}
                                 >
                                     حفظ ومعاينة (F3)
                                 </button>
-
-
                             </div>
                         </div>
 
@@ -3590,8 +3603,8 @@ export default function Purchases() {
                                 <div
                                     style={{
                                         flex: 1,
-                                        backgroundColor: "#fff7ed",
-                                        border: "1px dashed #fdba74",
+                                        backgroundColor: "#eff6ff",
+                                        border: "1px dashed #bfdbfe",
                                         borderRadius: "6px",
                                         padding: "8px",
                                         display: "flex",
@@ -3601,14 +3614,14 @@ export default function Purchases() {
                                         height: "80px",
                                     }}
                                 >
-                                    <span style={{ fontWeight: "bold", color: "#c2410c", fontSize: "13px" }}>
+                                    <span style={{ fontWeight: "bold", color: "#1d4ed8", fontSize: "13px" }}>
                                         ملخص المشتريات
                                     </span>
                                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                                        <span style={{ fontSize: "13px", color: "#9a3412" }}>
+                                        <span style={{ fontSize: "13px", color: "#1e3a8a" }}>
                                             الأصناف: {purchaseItemCount}
                                         </span>
-                                        <span style={{ fontSize: "13px", fontWeight: "bold", color: "#c2410c" }}>
+                                        <span style={{ fontSize: "13px", fontWeight: "bold", color: "#1d4ed8" }}>
                                             الكمية: {purchaseTotalQuantity}
                                         </span>
                                     </div>
@@ -3748,7 +3761,7 @@ export default function Purchases() {
                 isOpen={showShortcutsModal}
                 onClose={() => setShowShortcutsModal(false)}
                 title="اختصارات فاتورة المشتريات"
-                accentColor="#f97316"
+                accentColor="#008ae6"
                 sections={PURCHASE_SHORTCUT_SECTIONS}
             />
 
@@ -3816,7 +3829,7 @@ export default function Purchases() {
                                     padding: "10px 12px",
                                     borderRadius: "8px",
                                     border: "none",
-                                    backgroundColor: "#f97316",
+                                    background: "linear-gradient(135deg, #008ae6 0%, #007bb5 100%)",
                                     color: "white",
                                     fontWeight: "bold",
                                     cursor: "pointer",

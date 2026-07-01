@@ -1107,12 +1107,12 @@ export default function Customers() {
               e.currentTarget.style.transform = 'translateY(0)';
               e.currentTarget.style.boxShadow = '0 4px 12px rgba(51, 65, 85, 0.3)';
             }}
-            title="تحميل قالب استيراد البيانات"
+            title="تصدير بيانات العملاء"
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '20px', height: '20px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.2)' }}>
               ↓
             </div>
-            تحميل القالب
+            تصدير
           </button>
           <button
             onClick={() => window.dispatchEvent(new CustomEvent('customers-add', { detail: { tabId: activeTabId } }))}

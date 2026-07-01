@@ -376,12 +376,14 @@ const tooltipStyle = {
             style={{
               flex: 1,
               padding: "12px",
-              backgroundColor: duplicateNameError || phoneError || phone2Error || !customer.name ? "#ccc" : "#10b981",
-              color: "white",
+              background: duplicateNameError || phoneError || phone2Error || !customer.name ? "#e2e8f0" : "linear-gradient(135deg, #008ae6 0%, #007bb5 100%)",
+              color: duplicateNameError || phoneError || phone2Error || !customer.name ? "#94a3b8" : "white",
               border: "none",
               borderRadius: "8px",
-              cursor: "pointer",
+              cursor: duplicateNameError || phoneError || phone2Error || !customer.name ? "not-allowed" : "pointer",
               fontWeight: "bold",
+              boxShadow: duplicateNameError || phoneError || phone2Error || !customer.name ? "none" : "0 4px 12px rgba(0, 138, 230, 0.3)",
+              transition: "all 0.2s"
             }}
           >
             حفظ
@@ -392,15 +394,17 @@ const tooltipStyle = {
             style={{
               flex: 1,
               padding: "12px",
-              backgroundColor: "#6b7280",
+              background: "linear-gradient(135deg, #475569 0%, #334155 100%)",
               color: "white",
               border: "none",
               borderRadius: "8px",
               cursor: "pointer",
               fontWeight: "bold",
+              boxShadow: "0 4px 12px rgba(51, 65, 85, 0.3)",
+              transition: "all 0.2s"
             }}
           >
-            إلفاء
+            إلغاء
           </button>
         </div>
       </div>
