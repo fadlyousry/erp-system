@@ -182,7 +182,7 @@ const SETTINGS_TABS = [
   { id: 'purchaseInvoice', label: 'فاتورة الشراء', icon: <ShoppingCart /> },
   { id: 'salesReturn', label: 'مرتجع المبيعات', icon: <Undo2 /> },
   { id: 'purchaseReturn', label: 'مرتجع المشتريات', icon: <RotateCcw /> },
-  { id: 'customers', label: 'إدارة العملاء', icon: <Users /> },
+  { id: 'customers', label: 'العملاء المتأخرون', icon: <Users /> },
   { id: 'import', label: 'استيراد العملاء', icon: <Upload /> },
   { id: 'productsImport', label: 'استيراد المنتجات', icon: <Package /> },
   { id: 'aiMarketing', label: 'التسويق الذكي (AI)', icon: <Share2 /> },
@@ -3380,7 +3380,7 @@ export default function Settings() {
 
           {activeTab === 'customers' && (
             <section className="settings-card settings-customers-card">
-              <h2><UserCheck className="w-5 h-5" /> إعدادات العملاء</h2>
+              <h2><UserCheck className="w-5 h-5" /> إعدادات العملاء المتأخرون</h2>
               <p className="settings-hint">التحكم في عدد الأيام قبل اعتبار العميل متأخرًا في الدفع.</p>
 
               <div className="settings-range-wrap">
