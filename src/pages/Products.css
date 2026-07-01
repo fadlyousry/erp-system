@@ -1,6 +1,6 @@
 .products-page {
-  --primary: #0f766e;
-  --primary-light: #14b8a6;
+  --primary: #008ae6;
+  --primary-light: #007bb5;
   --secondary: #64748b;
   --bg: #f8fafc;
   --surface: #ffffff;
@@ -44,7 +44,7 @@
 .products-header-icon {
   width: 36px;
   height: 36px;
-  background: linear-gradient(135deg, #0f766e, #14b8a6);
+  background: linear-gradient(135deg, #008ae6, #007bb5);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -73,13 +73,13 @@
 }
 
 .products-btn-primary {
-  background: linear-gradient(135deg, #0f766e, #14b8a6);
+  background: linear-gradient(135deg, #008ae6, #007bb5);
   color: white;
-  box-shadow: 0 2px 8px rgba(15, 118, 110, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 138, 230, 0.3);
 }
 
 .products-btn-primary:hover {
-  box-shadow: 0 4px 14px rgba(15, 118, 110, 0.45);
+  box-shadow: 0 4px 14px rgba(0, 138, 230, 0.45);
   transform: translateY(-1px);
 }
 
@@ -196,7 +196,7 @@
 .products-search-wrapper input:focus {
   border-color: var(--primary-light);
   background: white;
-  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 138, 230, 0.1);
   outline: none;
 }
 
@@ -221,7 +221,7 @@
 .products-search-bar select:focus {
   border-color: var(--primary-light);
   background: white;
-  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
+  box-shadow: 0 0 0 3px rgba(0, 138, 230, 0.1);
   outline: none;
 }
 
@@ -246,8 +246,8 @@
 
 .products-filter-btn.is-active {
   background: #f0fdfa;
-  border-color: #0f766e;
-  color: #0f766e;
+  border-color: #008ae6;
+  color: #008ae6;
 }
 
 .products-search-meta {
@@ -271,7 +271,7 @@
 
 .products-search-meta .pill.count {
   background: #ecfeff;
-  color: #0f766e;
+  color: #008ae6;
   border-color: #99f6e4;
 }
 
@@ -333,8 +333,8 @@
 
 .tool-btn.selected {
   background: #f0fdfa;
-  border-color: #0f766e;
-  color: #0f766e;
+  border-color: #008ae6;
+  color: #008ae6;
 }
 
 .products-table-tools .divider {
@@ -365,13 +365,13 @@
 }
 
 .stat-pill.active {
-  background: #f0fdfa;
-  color: #0f766e;
-  border-color: #5eead4;
+  background: #f0f8ff;
+  color: #008ae6;
+  border-color: #008ae6;
 }
 
 .stat-pill.active strong {
-  color: #0f766e;
+  color: #008ae6;
 }
 
 .check-control {
@@ -460,12 +460,12 @@
 }
 
 .column-option .check-icon {
-  color: #0f766e;
+  color: #008ae6;
 }
 
 .column-option.highlight {
   background: #f0fdfa;
-  color: #0f766e;
+  color: #008ae6;
   margin-bottom: 4px;
 }
 
@@ -748,7 +748,7 @@
 }
 
 .icon-btn-solid.edit {
-  background: #0f766e; /* Teal/Green */
+  background: #008ae6; /* Teal/Green */
 }
 
 .icon-btn-solid.danger {
@@ -756,7 +756,7 @@
 }
 
 .icon-btn-solid.blue {
-  background: #3b82f6; /* Blue */
+  background: linear-gradient(135deg, #03273fff 0%, #002a5aff 100%); /* Dark Navy */
 }
 
 .icon-btn-solid.orange {
@@ -1306,8 +1306,8 @@
 .form-grid input[type="text"]:focus,
 .form-grid input[type="color"]:focus {
   outline: none;
-  border-color: #0f766e;
-  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
+  border-color: #008ae6;
+  box-shadow: 0 0 0 3px rgba(0, 138, 230, 0.1);
 }
 
 .category-list {
@@ -1385,7 +1385,7 @@
   z-index: 3000;
   padding: 12px 16px;
   border-radius: 10px;
-  background: #0f766e;
+  background: #008ae6;
   color: #ffffff;
   font-size: 13px;
   font-weight: 700;

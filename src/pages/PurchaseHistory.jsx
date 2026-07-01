@@ -334,6 +334,73 @@ function PurchaseDetailsModal({ purchase, onClose }) {
           </table>
         </div>
 
+        {(() => {
+          const itemsArr = Array.isArray(purchase.items) ? purchase.items : [];
+          const subtotal = itemsArr.length > 0 
+            ? itemsArr.reduce((sum, item) => sum + (toFiniteNumber(item.cost || item.price) * toFiniteNumber(item.quantity)), 0) 
+            : purchase.total;
+          
+          const total = toFiniteNumber(purchase.total);
+          const discount = Math.max(0, subtotal - total);
+          const paid = toFiniteNumber(purchase.paidAmount ?? purchase.paid);
+          const remaining = toFiniteNumber(purchase.remainingAmount ?? (total - paid));
+          
+          const currentBalance = toFiniteNumber(purchase.supplier?.balance);
+          const previousBalance = currentBalance - remaining;
+
+          return (
+            <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '0 25px' }}>
+              <div className="purchase-financial-card" style={{
+                background: '#f8fafc',
+                border: '1px solid #e2e8f0',
+                borderRadius: '10px',
+                padding: '20px',
+                marginTop: '15px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '12px',
+                minWidth: '280px'
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ color: '#64748b', fontSize: '14px' }}>الإجمالي:</span>
+                  <strong style={{ fontSize: '16px', color: '#1e293b' }}>{formatMoney(subtotal)}</strong>
+                </div>
+                {discount > 0 && (
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ color: '#64748b', fontSize: '14px' }}>الخصم:</span>
+                    <strong style={{ fontSize: '16px', color: '#ef4444' }}>{formatMoney(discount)}</strong>
+                  </div>
+                )}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ color: '#64748b', fontSize: '14px' }}>الصافي:</span>
+                  <strong style={{ fontSize: '16px', color: '#0f766e' }}>{formatMoney(total)}</strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ color: '#64748b', fontSize: '14px' }}>المدفوع:</span>
+                  <strong style={{ fontSize: '16px', color: '#10b981' }}>{formatMoney(paid)}</strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ color: '#64748b', fontSize: '14px' }}>المتبقي:</span>
+                  <strong style={{ fontSize: '16px', color: remaining > 0 ? '#f59e0b' : '#64748b' }}>{formatMoney(remaining)}</strong>
+                </div>
+                {purchase.supplier && (
+                  <>
+                    <div style={{ height: '1px', background: '#cbd5e1', margin: '4px 0' }}></div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ color: '#64748b', fontSize: '14px' }}>الرصيد السابق:</span>
+                      <strong style={{ fontSize: '16px', color: '#475569' }}>{formatMoney(previousBalance)}</strong>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ color: '#64748b', fontSize: '14px' }}>الرصيد الحالي:</span>
+                      <strong style={{ fontSize: '16px', color: '#3b82f6' }}>{formatMoney(currentBalance)}</strong>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          );
+        })()}
+
         <div className="modal-actions" style={{ marginTop: '25px', display: 'flex', gap: '10px', padding: '0 25px 25px' }}>
           <button
             className="sales-btn sales-btn-primary"

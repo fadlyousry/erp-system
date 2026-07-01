@@ -53,9 +53,9 @@ export const nNum = (v, f = 0) => {
 export const money = (v) => {
     const num = Number(v || 0);
     if (Number.isInteger(num)) {
-        return num.toLocaleString('ar-EG');
+        return num.toLocaleString('en-US');
     }
-    return num.toLocaleString('ar-EG', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+    return num.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
 };
 export const csv = (v) => {
     const s = String(v ?? '');

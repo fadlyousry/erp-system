@@ -50,6 +50,7 @@ const ProductsFilters = React.memo(({
 
             <select value={sortPreset} onChange={(e) => onSortPresetChange(e.target.value)}>
                 {SORT_PRESETS.map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}
+                <option value="custom" disabled hidden>فرز مخصص</option>
             </select>
 
             <button 

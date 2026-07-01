@@ -145,37 +145,25 @@ export default function CategoryModal({ isOpen, onClose, categories, onSave, onD
                                 <span style={{ fontWeight: 700, fontSize: '13px', color: '#475569', display: 'flex', alignItems: 'center', gap: '4px' }}>
                                     <Palette size={13} style={{ color: '#0f766e' }} /> اللون المميز
                                 </span>
-                                <div style={{ display: 'flex', gap: '6px' }}>
-                                    <input 
-                                        type="color" 
-                                        style={{
-                                            height: '36px',
-                                            padding: '2px',
-                                            width: '42px',
-                                            cursor: 'pointer',
-                                            borderRadius: '8px',
-                                            border: '1px solid #cbd5e1',
-                                            background: '#ffffff'
-                                        }}
-                                        value={categoryForm.color} 
-                                        onChange={(e) => setCategoryForm((p) => ({ ...p, color: e.target.value }))} 
-                                    />
-                                    <input 
-                                        type="text" 
-                                        className="form-input" 
-                                        value={categoryForm.color} 
-                                        onChange={(e) => setCategoryForm((p) => ({ ...p, color: e.target.value }))}
-                                        style={{
-                                            flex: 1,
-                                            textTransform: 'uppercase',
-                                            padding: '8px 12px',
-                                            border: '1px solid #cbd5e1',
-                                            borderRadius: '8px',
-                                            fontSize: '13px',
-                                            fontFamily: 'inherit',
-                                            background: '#ffffff'
-                                        }}
-                                    />
+                                <div style={{ display: 'flex', gap: '10px', height: '36px', alignItems: 'center' }}>
+                                    {['#0f766e', '#2563eb', '#16a34a', '#d97706', '#dc2626'].map(color => (
+                                        <button
+                                            key={color}
+                                            type="button"
+                                            onClick={() => setCategoryForm(p => ({ ...p, color }))}
+                                            style={{
+                                                width: '28px',
+                                                height: '28px',
+                                                borderRadius: '50%',
+                                                backgroundColor: color,
+                                                border: categoryForm.color?.toLowerCase() === color ? '2px solid #ffffff' : '2px solid transparent',
+                                                boxShadow: categoryForm.color?.toLowerCase() === color ? `0 0 0 2px ${color}` : '0 1px 3px rgba(0,0,0,0.15)',
+                                                cursor: 'pointer',
+                                                padding: 0,
+                                                transition: 'all 0.2s'
+                                            }}
+                                        />
+                                    ))}
                                 </div>
                             </label>
 

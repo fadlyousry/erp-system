@@ -28,7 +28,7 @@
 .suppliers-header-icon {
   width: 36px;
   height: 36px;
-  background: linear-gradient(135deg, #6366f1, #818cf8);
+  background: linear-gradient(135deg, #067aaf, #0ea5e9);
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -57,7 +57,7 @@
 }
 
 .suppliers-btn-primary {
-  background: linear-gradient(135deg, #6366f1, #818cf8);
+  background: linear-gradient(135deg, #10223d, #0ea5e9);
   color: white;
   box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
 }
@@ -151,7 +151,7 @@
 }
 
 .suppliers-stat-value.is-debt { color: #dc2626; }
-.suppliers-stat-value.is-credit { color: #2563eb; }
+.suppliers-stat-value.is-credit { color: #0ea5e9; }
 .suppliers-stat-value.is-net-negative { color: #dc2626; }
 .suppliers-stat-value.is-net-positive { color: #059669; }
 
@@ -193,7 +193,7 @@
 }
 
 .suppliers-search-wrapper input:focus {
-  border-color: #818cf8;
+  border-color: #0ea5e9;
   background: white;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
   outline: none;
@@ -218,7 +218,7 @@
 }
 
 .suppliers-search-bar select:focus {
-  border-color: #818cf8;
+  border-color: #0ea5e9;
   background: white;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
   outline: none;
@@ -244,9 +244,9 @@
 }
 
 .suppliers-filter-btn.is-active {
-  background: #eff6ff;
-  border-color: #2563eb;
-  color: #2563eb;
+  background: #f0f9ff;
+  border-color: #0ea5e9;
+  color: #0ea5e9;
 }
 
 /* --- Column Selector Menu --- */
@@ -335,7 +335,7 @@
 }
 
 .column-search-row input:focus {
-  border-color: #2563eb;
+  border-color: #0ea5e9;
   outline: none;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
@@ -381,7 +381,7 @@
 }
 
 .suppliers-table-card tbody tr:hover {
-  background-color: #eff6ff !important;
+  background-color: #f0f9ff !important;
 }
 
 .suppliers-table-card tbody td {
@@ -406,7 +406,7 @@
 }
 
 .suppliers-balance-cell.is-negative { color: #dc2626 !important; }
-.suppliers-balance-cell.is-positive { color: #2563eb !important; }
+.suppliers-balance-cell.is-positive { color: #0ea5e9 !important; }
 .suppliers-balance-cell.is-zero { color: #059669 !important; }
 
 /* --- Action Buttons --- */
@@ -446,8 +446,8 @@
 }
 
 .suppliers-action-btn.is-ledger { background: #334155; }
-.suppliers-action-btn.is-payment { background: #2563eb; }
-.suppliers-action-btn.is-edit { background: #0f766e; }
+.suppliers-action-btn.is-payment { background: #10223d; }
+.suppliers-action-btn.is-edit { background: #0ea5e9; }
 .suppliers-action-btn.is-delete { background: #c81e1e; }
 
 /* --- Empty State --- */
@@ -580,7 +580,7 @@
 .suppliers-form-group input:focus,
 .suppliers-form-group select:focus,
 .suppliers-form-group textarea:focus {
-  border-color: #818cf8;
+  border-color: #0ea5e9;
   background: white;
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
   outline: none;
@@ -649,7 +649,7 @@
   width: 40px;
   height: 40px;
   border: 3px solid #e2e8f0;
-  border-top-color: #6366f1;
+  border-top-color: #0ea5e9;
   border-radius: 50%;
   animation: suppliers-spin 0.8s linear infinite;
 }

@@ -500,13 +500,13 @@
 }
 
 .price-update-trigger-btn {
-    background: #f0fdfa;
-    border-color: #5eead4;
-    color: #0f766e;
+    background: #f0f8ff;
+    border-color: #008ae6;
+    color: #008ae6;
 }
 
 .price-update-trigger-btn:hover {
-    background: #ccfbf1;
-    border-color: #0f766e;
-    color: #0f766e;
+    background: #e0f2fe;
+    border-color: #008ae6;
+    color: #008ae6;
 }

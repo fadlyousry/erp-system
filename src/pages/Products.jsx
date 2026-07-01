@@ -260,7 +260,8 @@ export default function Products() {
   const [categoryFilter, setCategoryFilter] = useState('');
   const [warehouseFilter, setWarehouseFilter] = useState('');
   const [stockFilter, setStockFilter] = useState('all');
-  const [sortPreset, setSortPreset] = useState('latest');
+  const [sortCol, setSortCol] = useState('createdAt');
+  const [sortDir, setSortDir] = useState('desc');
 
   const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -341,7 +342,25 @@ export default function Products() {
   const editProductRequestRef = useRef(0);
   const matrixBarcodeLoaderRef = useRef(null);
 
-  const activeSort = useMemo(() => SORT_PRESETS.find((s) => s.id === sortPreset) || SORT_PRESETS[0], [sortPreset]);
+  const sortPreset = useMemo(() => {
+    const p = SORT_PRESETS.find((s) => s.sortCol === sortCol && s.sortDir === sortDir);
+    return p ? p.id : 'custom';
+  }, [sortCol, sortDir]);
+
+  const handleColumnSort = useCallback((key) => {
+    const SORT_MAPPING = {
+      name: 'name',
+      salePrice: 'basePrice',
+      costPrice: 'cost',
+      updatedAt: 'updatedAt',
+      code: 'sku'
+    };
+    const mappedKey = SORT_MAPPING[key];
+    if (!mappedKey) return;
+    setSortDir((prev) => (sortCol === mappedKey && prev === 'asc' ? 'desc' : 'asc'));
+    setSortCol(mappedKey);
+    setCurrentPage(1);
+  }, [sortCol]);
   const normalizedColumnSearches = useMemo(() => {
     const entries = Object.entries(debouncedColumnSearches || {})
       .map(([key, value]) => [nText(key), nText(value)])
@@ -587,8 +606,8 @@ export default function Products() {
         categoryId: categoryFilter || null,
         warehouseId: warehouseFilter || null,
         stockFilter: stockFilter || 'all',
-        sortCol: activeSort.sortCol,
-        sortDir: activeSort.sortDir,
+        sortCol: sortCol,
+        sortDir: sortDir,
         includeImage: false
       });
 
@@ -615,7 +634,7 @@ export default function Products() {
       setRefreshing(false);
       setSearchLoading(false);
     }
-  }, [activeSort.sortCol, activeSort.sortDir, categoryFilter, warehouseFilter, currentPage, debouncedSearchTerm, normalizedColumnSearches, stockFilter]);
+  }, [sortCol, sortDir, categoryFilter, warehouseFilter, currentPage, debouncedSearchTerm, normalizedColumnSearches, stockFilter]);
 
   useEffect(() => {
     loadCategories();
@@ -695,8 +714,12 @@ export default function Products() {
   }, []);
 
   const handleSortPresetChange = useCallback((value) => {
-    setCurrentPage(1);
-    setSortPreset(value);
+    const preset = SORT_PRESETS.find((s) => s.id === value);
+    if (preset) {
+      setSortCol(preset.sortCol);
+      setSortDir(preset.sortDir);
+      setCurrentPage(1);
+    }
   }, []);
 
   const handleColumnSearchChange = useCallback((columnKey, value) => {
@@ -1410,7 +1433,7 @@ export default function Products() {
     if (!key) return null;
     if (map.has(key)) return map.get(key).id;
 
-    const add = await window.api.addCategory({ name: nText(name), description: null, color: '#0f766e', icon: '❒' });
+    const add = await window.api.addCategory({ name: nText(name), description: null, color: '#008ae6', icon: '❒' });
     if (add?.error) throw new Error(add.error);
     map.set(key, add);
     return add.id;
@@ -1677,7 +1700,7 @@ export default function Products() {
     const payload = {
       name,
       description: nText(categoryData.description) || null,
-      color: nText(categoryData.color) || '#0f766e',
+      color: nText(categoryData.color) || '#008ae6',
       icon: ''
     };
 
@@ -1820,11 +1843,32 @@ export default function Products() {
               className="products-grid-header"
               style={{ display: 'grid', gridTemplateColumns }}
             >
-              {activeColumns.map((column) => (
-                <div key={column.key} className={`products-grid-head-cell head-${column.key}`}>
-                  {column.label}
-                </div>
-              ))}
+              {activeColumns.map((column) => {
+                const SORT_MAPPING = {
+                  name: 'name',
+                  salePrice: 'basePrice',
+                  costPrice: 'cost',
+                  updatedAt: 'updatedAt',
+                  code: 'sku'
+                };
+                const mappedKey = SORT_MAPPING[column.key];
+                const isSortable = !!mappedKey;
+                return (
+                  <div 
+                    key={column.key} 
+                    className={`products-grid-head-cell head-${column.key}`}
+                    onClick={isSortable ? () => handleColumnSort(column.key) : undefined}
+                    style={isSortable ? { cursor: 'pointer', userSelect: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', transition: 'background 0.2s' } : undefined}
+                  >
+                    {column.label}
+                    {isSortable && sortCol === mappedKey && (
+                      <span style={{ fontSize: '10px', color: 'var(--primary-color, #0f766e)', marginTop: '2px' }}>
+                        {sortDir === 'asc' ? '▲' : '▼'}
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
             </div>
 
             {showSearchRow && (

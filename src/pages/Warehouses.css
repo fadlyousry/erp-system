@@ -3,11 +3,11 @@
    ========================================================================== */
 
 .warehouses-page {
-  --primary: #2563eb;         /* Royal Blue Primary */
-  --primary-hover: #1d4ed8;
-  --primary-light: #eff6ff;
-  --primary-soft: rgba(37, 99, 235, 0.1);
-  --secondary: #64748b;
+  --primary: #0ea5e9;         /* Light Blue (Logo Color) */
+  --primary-hover: #0284c7;
+  --primary-light: #f0f9ff;
+  --primary-soft: rgba(14, 165, 233, 0.1);
+  --secondary: #10223d;       /* Dark Navy Blue */
   --text-main: #1e293b;
   --text-muted: #64748b;
   --bg-app: #f8fafc;
@@ -50,7 +50,7 @@
 .warehouses-header-icon {
   width: 42px;
   height: 42px;
-  background: linear-gradient(135deg, var(--primary), #3b82f6);
+  background: linear-gradient(135deg, var(--secondary), var(--primary));
   border-radius: 12px;
   display: flex;
   align-items: center;

@@ -2800,8 +2800,7 @@ const dbService = {
                         {
                             warehouseStocks: {
                                 some: {
-                                    warehouseId: parsedWarehouseId,
-                                    quantity: { gt: 0 }
+                                    warehouseId: parsedWarehouseId
                                 }
                             }
                         },
@@ -2810,8 +2809,7 @@ const dbService = {
                                 some: {
                                     warehouseStocks: {
                                         some: {
-                                            warehouseId: parsedWarehouseId,
-                                            quantity: { gt: 0 }
+                                            warehouseId: parsedWarehouseId
                                         }
                                     }
                                 }
