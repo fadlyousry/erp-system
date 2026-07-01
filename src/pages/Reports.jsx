@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import './Reports.css';
 import { getAppSettings } from '../utils/appSettings';
+import { ShoppingCart, Package, Undo2, RotateCcw, Printer, FileText } from 'lucide-react';
 
 const Reports = ({ activeReport }) => {
     const [loading, setLoading] = useState(false);
@@ -193,7 +194,7 @@ const Reports = ({ activeReport }) => {
                     <div>
                         <div style="margin-bottom: 30px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #3b82f6; padding-bottom: 5px; margin-bottom: 10px;">
-                                <h3 style="margin: 0; font-size: 16px;">🛒 مبيعات</h3>
+                                <h3 style="margin: 0; font-size: 16px;">&#128722; مبيعات</h3>
                                 <span style="font-size: 12px; background: #eff6ff; padding: 3px 10px; border-radius: 15px; color: #3b82f6; font-weight: bold;">إجمالي: ${salesQty}</span>
                             </div>
                             <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: right;">
@@ -212,7 +213,7 @@ const Reports = ({ activeReport }) => {
 
                         <div>
                             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ef4444; padding-bottom: 5px; margin-bottom: 10px;">
-                                <h3 style="margin: 0; font-size: 16px;">↩️ مرتجع مبيعات</h3>
+                                <h3 style="margin: 0; font-size: 16px;">&#8617; مرتجع مبيعات</h3>
                                 <span style="font-size: 12px; background: #fef2f2; padding: 3px 10px; border-radius: 15px; color: #ef4444; font-weight: bold;">إجمالي: ${salesReturnsQty}</span>
                             </div>
                             <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: right;">
@@ -234,7 +235,7 @@ const Reports = ({ activeReport }) => {
                     <div>
                         <div style="margin-bottom: 30px;">
                             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #16a34a; padding-bottom: 5px; margin-bottom: 10px;">
-                                <h3 style="margin: 0; font-size: 16px;">📦 مشتريات</h3>
+                                <h3 style="margin: 0; font-size: 16px;">&#128230; مشتريات</h3>
                                 <span style="font-size: 12px; background: #f0fdf4; padding: 3px 10px; border-radius: 15px; color: #16a34a; font-weight: bold;">إجمالي: ${purchasesQty}</span>
                             </div>
                             <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: right;">
@@ -252,7 +253,7 @@ const Reports = ({ activeReport }) => {
 
                         <div>
                             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #dc2626; padding-bottom: 5px; margin-bottom: 10px;">
-                                <h3 style="margin: 0; font-size: 16px;">❌ مرتجع مشتريات</h3>
+                                <h3 style="margin: 0; font-size: 16px;">&#10006; مرتجع مشتريات</h3>
                                 <span style="font-size: 12px; background: #fef2f2; padding: 3px 10px; border-radius: 15px; color: #dc2626; font-weight: bold;">إجمالي: ${purchaseReturnsQty}</span>
                             </div>
                             <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: right;">
@@ -342,7 +343,7 @@ const Reports = ({ activeReport }) => {
                         </h1>
                         <div className="report-actions">
                             <button className="btn-report btn-print" onClick={handlePrint}>
-                                <span>🖨️</span> طباعة
+                                <Printer size={16} /> طباعة
                             </button>
                         </div>
                     </div>
@@ -434,7 +435,7 @@ const Reports = ({ activeReport }) => {
                                                 <div className="grid-column sales-side">
                                                     <section className="movement-section">
                                                         <div className="section-header">
-                                                            <h3 className="section-title">🛒 فواتير البيع</h3>
+                                                            <h3 className="section-title"><ShoppingCart size={18} /> فواتير البيع</h3>
                                                             <span className="section-summary-qty">إجمالي: {salesQty} قطعة</span>
                                                         </div>
                                                         <div className="report-table-container min-table">
@@ -457,7 +458,7 @@ const Reports = ({ activeReport }) => {
 
                                                     <section className="movement-section">
                                                         <div className="section-header">
-                                                            <h3 className="section-title">↩️ مرتجعات المبيعات</h3>
+                                                            <h3 className="section-title"><Undo2 size={18} /> مرتجعات المبيعات</h3>
                                                             <span className="section-summary-qty">إجمالي: {salesReturnsQty} قطعة</span>
                                                         </div>
                                                         <div className="report-table-container min-table">
@@ -483,7 +484,7 @@ const Reports = ({ activeReport }) => {
                                                 <div className="grid-column purchase-side">
                                                     <section className="movement-section">
                                                         <div className="section-header">
-                                                            <h3 className="section-title">📦 فواتير الشراء</h3>
+                                                            <h3 className="section-title"><Package size={18} /> فواتير الشراء</h3>
                                                             <span className="section-summary-qty">إجمالي: {purchasesQty} قطعة</span>
                                                         </div>
                                                         <div className="report-table-container min-table">
@@ -505,7 +506,7 @@ const Reports = ({ activeReport }) => {
 
                                                     <section className="movement-section">
                                                         <div className="section-header">
-                                                            <h3 className="section-title">❌ مرتجعات المشتريات</h3>
+                                                            <h3 className="section-title"><RotateCcw size={18} /> مرتجعات المشتريات</h3>
                                                             <span className="section-summary-qty">إجمالي: {purchaseReturnsQty} قطعة</span>
                                                         </div>
                                                         <div className="report-table-container min-table">

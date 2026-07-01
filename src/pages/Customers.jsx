@@ -208,6 +208,13 @@ export function CustomerWorkspace({ tabId, tabTitle, isActive }) {
             showToast(`لم أجد عميلاً باسم "${nameToSearch}"، جرب البحث يدوياً`, "warning");
           }
         }
+      } else if (action === 'VIEW_LEDGER') {
+        if (data && data.id) {
+          setShowLedger(data.id);
+          if (data.name) {
+            setSearchTerm(data.name);
+          }
+        }
       }
     };
     window.addEventListener(CUSTOMER_COMMAND_EVENT, handleCustomerCommand);

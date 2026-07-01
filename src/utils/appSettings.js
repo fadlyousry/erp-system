@@ -366,7 +366,7 @@ export const setAllowNegativeInventory = (value) => {
 export const getCompanyPrintSettings = () => {
   const settings = getAppSettings();
   return {
-    name: normalizeCompanyName(settings.companyName) || 'FADL ERP',
+    name: normalizeCompanyName(settings.companyName) || 'FYC Store Manager',
     contactNumbers: normalizeCompanyContactNumbers(settings.companyContactNumbers),
     address: normalizeCompanyAddress(settings.companyAddress)
   };

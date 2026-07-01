@@ -75,7 +75,7 @@ export const generateOverdueReportHTML = (customers, threshold) => {
             </table>
 
             <div class="footer">
-                طبع بواسطة نظام FADL ERP في ${new Date().toLocaleString('ar-EG')}
+                طبع بواسطة نظام FYC Store Manager في ${new Date().toLocaleString('ar-EG')}
             </div>
         </body>
         </html>

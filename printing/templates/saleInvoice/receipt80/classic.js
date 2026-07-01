@@ -549,7 +549,7 @@ export const renderClassic = ({
 
   const data = {
     company: {
-      name: company?.name || 'FADL ERP',
+      name: company?.name || 'FYC Store Manager',
       address: company?.companyAddress || '',
       companyContactNumbers: company?.companyContactNumbers || '',
       logoUrl: company?.logoUrl || ''

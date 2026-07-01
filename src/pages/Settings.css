@@ -5,16 +5,16 @@
 
 .settings-page {
   /* Premium Design System Custom Properties — Royal Blue Brand Theme */
-  --settings-brand: #2563eb; /* Deep blue matching logo & dashboard */
-  --settings-brand-strong: #1d4ed8; /* Strong vibrant blue */
+  --settings-brand: #008ae6; /* Deep blue matching logo & dashboard */
+  --settings-brand-strong: #007bb5; /* Strong vibrant blue */
   --settings-brand-soft: #eff6ff; /* Creamy soft blue background */
   --settings-brand-border: #dbeafe; /* Gentle blue border */
-  --settings-brand-shadow: rgba(37, 99, 235, 0.06);
-  --settings-brand-text: #1e40af; /* Classic dark blue text */
+  --settings-brand-shadow: rgba(0, 138, 230, 0.06);
+  --settings-brand-text: #004b7c; /* Classic dark blue text */
   
-  --settings-accent: #2563eb; /* Primary accent is also blue */
+  --settings-accent: #008ae6; /* Primary accent is also blue */
   --settings-accent-soft: #eff6ff;
-  --settings-accent-text: #1e40af;
+  --settings-accent-text: #004b7c;
   
   --settings-text-main: #0f172a; /* Sleek Slate 900 */
   --settings-text-muted: #64748b; /* Slate 500 */
@@ -27,7 +27,7 @@
   --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.03);
   --shadow-md: 0 8px 30px rgba(15, 23, 42, 0.04);
   --shadow-lg: 0 20px 40px -10px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.02);
-  --shadow-glow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+  --shadow-glow: 0 0 0 4px rgba(0, 138, 230, 0.15);
 
   display: flex;
   flex-direction: column;
@@ -1373,18 +1373,18 @@
 .settings-btn-primary {
   background: linear-gradient(135deg, var(--settings-brand) 0%, var(--settings-brand-strong) 100%);
   color: #ffffff;
-  box-shadow: 0 8px 20px rgba(15, 118, 110, 0.2);
+  box-shadow: 0 8px 20px var(--settings-brand-shadow);
 }
 
 .settings-btn-primary:not(:disabled):hover {
-  background: linear-gradient(135deg, #115e59 0%, #0f766e 100%);
+  background: linear-gradient(135deg, #006da1 0%, #004b7c 100%);
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(15, 118, 110, 0.3);
+  box-shadow: 0 12px 28px rgba(0, 138, 230, 0.3);
 }
 
 .settings-btn-primary:not(:disabled):active {
   transform: translateY(0);
-  box-shadow: 0 4px 10px rgba(15, 118, 110, 0.15);
+  box-shadow: 0 4px 10px rgba(0, 138, 230, 0.15);
 }
 
 .settings-btn-secondary {

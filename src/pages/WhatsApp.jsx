@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import CustomerLedger from './CustomerLedger';
 import ModernConfirmModal from '../components/ModernConfirmModal';
+import { CheckCircle, XCircle, AlertTriangle, Info, AlertOctagon, Smartphone, Users, MessageCircle, Receipt, QrCode, Loader, WifiOff, Link, RefreshCw, Unlink, Bell, Eye, Send, PhoneOff, FileText, BarChart } from 'lucide-react';
 import './WhatsApp.css';
 
 const TEMPLATES = [
@@ -61,10 +62,10 @@ const Toast = ({ message, type = "info", onClose }) => {
     }[type];
 
     const icon = {
-        success: "✅",
-        error: "❌",
-        warning: "⚠️",
-        info: "ℹ️",
+        success: <CheckCircle size={20} />,
+        error: <XCircle size={20} />,
+        warning: <AlertTriangle size={20} />,
+        info: <Info size={20} />,
     }[type];
 
     return (
@@ -316,7 +317,7 @@ export default function WhatsApp() {
             {/* ── Alert Bar ── */}
             {critical.length > 0 && (
                 <div className="wa-alert-bar">
-                    <span className="wa-alert-icon">🚨</span>
+                    <AlertOctagon size={24} className="wa-alert-icon" />
                     <span><strong>{toArabicNum(critical.length)}</strong> عميل متأخر أكثر من {toArabicNum(60)} يوم — إجمالي المعرض للخطر: <strong>{toArabicNum(critical.reduce((s, c) => s + (c.balance || 0), 0).toFixed(0))} ج.م</strong></span>
                     <span className="wa-alert-sub">{withoutPhone.length > 0 && `• ${toArabicNum(withoutPhone.length)} بدون رقم هاتف`}</span>
                 </div>
@@ -332,10 +333,10 @@ export default function WhatsApp() {
 
             {/* ── Tabs ── */}
             <div className="wa-tabs">
-                <button className={`wa-tab ${activeTab === 'connection' ? 'active' : ''}`} onClick={() => setActiveTab('connection')}>📱 حالة الاتصال</button>
-                <button className={`wa-tab ${activeTab === 'overdue' ? 'active' : ''}`} onClick={() => setActiveTab('overdue')}>📋 العملاء المتأخرين</button>
-                <button className={`wa-tab ${activeTab === 'messages' ? 'active' : ''}`} onClick={() => setActiveTab('messages')}>💬 إرسال رسائل</button>
-                <button className={`wa-tab ${activeTab === 'invoices' ? 'active' : ''}`} onClick={() => setActiveTab('invoices')}>🧾 إرسال فواتير</button>
+                <button className={`wa-tab ${activeTab === 'connection' ? 'active' : ''}`} onClick={() => setActiveTab('connection')}><Smartphone size={16} /> حالة الاتصال</button>
+                <button className={`wa-tab ${activeTab === 'overdue' ? 'active' : ''}`} onClick={() => setActiveTab('overdue')}><Users size={16} /> العملاء المتأخرين</button>
+                <button className={`wa-tab ${activeTab === 'messages' ? 'active' : ''}`} onClick={() => setActiveTab('messages')}><MessageCircle size={16} /> إرسال رسائل</button>
+                <button className={`wa-tab ${activeTab === 'invoices' ? 'active' : ''}`} onClick={() => setActiveTab('invoices')}><Receipt size={16} /> إرسال فواتير</button>
             </div>
 
             {/* ═══ TAB: Connection ═══ */}
@@ -343,10 +344,10 @@ export default function WhatsApp() {
                 <div className="wa-tab-content">
                     <div className="wa-connection-page">
                         <div className={`wa-conn-status-icon ${connectionStatus}`}>
-                            {connectionStatus === 'connected' && '✅'}
-                            {connectionStatus === 'qr_pending' && '📱'}
-                            {connectionStatus === 'connecting' && '⏳'}
-                            {connectionStatus === 'disconnected' && '❌'}
+                            {connectionStatus === 'connected' && <CheckCircle size={48} />}
+                            {connectionStatus === 'qr_pending' && <QrCode size={48} />}
+                            {connectionStatus === 'connecting' && <Loader size={48} className="spinner" />}
+                            {connectionStatus === 'disconnected' && <WifiOff size={48} />}
                         </div>
                         <h2>{connectionStatus === 'connected' ? 'واتساب متصل ويعمل بنجاح' : connectionStatus === 'qr_pending' ? 'امسح الكود لربط الجهاز' : connectionStatus === 'connecting' ? 'جاري الاتصال...' : 'واتساب غير متصل'}</h2>
                         <p>{connectionStatus === 'connected' ? 'النظام جاهز الآن لإرسال الرسائل والفواتير للعملاء أوتوماتيكياً. يمكنك البدء في استخدام الخدمات من التابات المجاورة.' : connectionStatus === 'qr_pending' ? 'افتح تطبيق واتساب على هاتفك، اذهب إلى الأجهزة المرتبطة (Linked Devices)، ثم اضغط على ربط جهاز (Link a Device) وامسح الكود التالي.' : connectionStatus === 'connecting' ? 'يرجى الانتظار بينما يتم تجهيز خوادم واتساب للاتصال.' : 'يجب ربط حساب واتساب الخاص بك لتتمكن من إرسال الإشعارات للعملاء.'}</p>
@@ -361,14 +362,14 @@ export default function WhatsApp() {
                             {/* Connect Button - Shown when disconnected or stuck */}
                             {(connectionStatus === 'disconnected' || connectionStatus === 'qr_pending' || connectionStatus === 'connecting') && !connecting && (
                                 <button className="wa-btn wa-btn-connect" onClick={handleConnect} style={{ backgroundColor: '#2563eb', color: 'white', padding: '12px 24px', borderRadius: '10px', fontWeight: 'bold', border: 'none', cursor: 'pointer', boxShadow: '0 4px 6px rgba(37, 99, 235, 0.2)' }}>
-                                    🔗 ربط حساب جديد
+                                    <Link size={16} /> ربط حساب جديد
                                 </button>
                             )}
                             
                             {/* Loading State */}
                             {connecting && (
                                 <button className="wa-btn wa-btn-connect" disabled style={{ backgroundColor: '#94a3b8', color: 'white', padding: '12px 24px', borderRadius: '10px', fontWeight: 'bold', border: 'none', cursor: 'not-allowed' }}>
-                                    ⏳ جاري التجهيز...
+                                    <Loader size={16} className="spinner" /> جاري التجهيز...
                                 </button>
                             )}
                             
@@ -380,14 +381,14 @@ export default function WhatsApp() {
                                     title="امسح الجلسة وابدأ من جديد"
                                     style={{ backgroundColor: '#fef2f2', color: '#dc2626', border: '1px solid #fee2e2', padding: '12px 24px', borderRadius: '10px', fontWeight: 'bold', cursor: 'pointer', transition: 'all 0.2s' }}
                                 >
-                                    ♻️ إعادة تعيين الاتصال
+                                    <RefreshCw size={16} /> إعادة تعيين الاتصال
                                 </button>
                             )}
                             
                             {/* Disconnect Button - Shown only when connected */}
                             {isConnected && (
                                 <button className="wa-btn wa-btn-disconnect" onClick={handleDisconnect} style={{ backgroundColor: '#ef4444', color: 'white', padding: '12px 24px', borderRadius: '10px', fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
-                                    ⛓️‍💥 فصل الحساب الحالي
+                                    <Unlink size={16} /> فصل الحساب الحالي
                                 </button>
                             )}
                         </div>
@@ -404,7 +405,7 @@ export default function WhatsApp() {
                         </select>
                         <input type="number" placeholder="أقل مبلغ..." value={minBalance} onChange={e => setMinBalance(e.target.value)} />
                         <input type="text" placeholder="بحث بالاسم أو الرقم..." value={searchText} onChange={e => setSearchText(e.target.value)} className="wa-search" />
-                        <button className="wa-btn wa-btn-refresh" onClick={loadCustomers} disabled={loading}>{loading ? '⏳' : '🔄'} تحديث</button>
+                        <button className="wa-btn wa-btn-refresh" onClick={loadCustomers} disabled={loading}><RefreshCw size={16} className={loading ? 'spinner' : ''} /> تحديث</button>
                     </div>
                     <div className="wa-table-wrap">
                         <table className="wa-table">
@@ -432,7 +433,7 @@ export default function WhatsApp() {
                                             {c.name}
                                             {c.whatsappLogCount > 0 && (
                                                 <span className="wa-log-badge" title={`${c.whatsappLogCount} رسالة مرسلة`}>
-                                                    🔔 {toArabicNum(c.whatsappLogCount)}
+                                                    <Bell size={12} style={{marginRight: '2px'}} /> {toArabicNum(c.whatsappLogCount)}
                                                 </span>
                                             )}
                                         </div></td>
@@ -451,7 +452,7 @@ export default function WhatsApp() {
                                                 onClick={() => setShowCustomerLedger(c.id)} 
                                                 title="عرض كشف الحساب"
                                             >
-                                                👁️
+                                                <Eye size={16} />
                                             </button>
                                             {c.hasPhone ? (
                                                 <button 
@@ -460,10 +461,10 @@ export default function WhatsApp() {
                                                     disabled={!isConnected} 
                                                     title="إرسال تذكير واتساب"
                                                 >
-                                                    📲
+                                                    <Send size={16} />
                                                 </button>
                                             ) : (
-                                                <span className="wa-no-phone-icon" title="لا يوجد رقم مسجل">🚫</span>
+                                                <span className="wa-no-phone-icon" title="لا يوجد رقم مسجل"><PhoneOff size={16} /></span>
                                             )}
                                         </td>
                                     </tr>);
@@ -510,7 +511,7 @@ export default function WhatsApp() {
                                                 <td className="wa-balance">{toArabicNum(Number(c.balance || 0).toFixed(2))}</td>
                                                 <td className="wa-date">{toArabicNum(c.lastPaymentDate ? new Date(c.lastPaymentDate).toLocaleDateString('ar-EG') : '—')}</td>
                                                 <td><span className={`wa-days-badge ${daysBadgeClass(daysSince(c.lastPaymentDate))}`}>{toArabicNum(daysSince(c.lastPaymentDate))}</span></td>
-                                                <td><button className="wa-icon-btn" onClick={() => handleSendSingle(c)} disabled={!isConnected} title="إرسال">💬</button></td>
+                                                <td><button className="wa-icon-btn" onClick={() => handleSendSingle(c)} disabled={!isConnected} title="إرسال"><Send size={16} /></button></td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -519,14 +520,14 @@ export default function WhatsApp() {
                             {selectedIds.size > 0 && (
                                 <div className="wa-bulk-bar">
                                     <span>تم تحديد {toArabicNum(selectedIds.size)} عميل</span>
-                                    <button className="wa-btn wa-btn-send" onClick={handleSendBulk} disabled={sending || !isConnected}>
-                                        {sending ? '⏳ جاري...' : `📤 إرسال جماعي (${toArabicNum(selectedIds.size)})`}
+                                    <button className="wa-btn wa-btn-send" onClick={handleSendBulk} disabled={sending || !isConnected} style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
+                                        {sending ? <><Loader size={16} className="spinner" /> جاري...</> : <><Send size={16} /> إرسال جماعي ({toArabicNum(selectedIds.size)})</>}
                                     </button>
                                 </div>
                             )}
                         </div>
                         <div className="wa-message-section">
-                            <h3>📝 قالب الرسالة</h3>
+                            <h3><FileText size={18} /> قالب الرسالة</h3>
                             <select 
                                 className="wa-template-selector" 
                                 onChange={(e) => {
@@ -555,7 +556,7 @@ export default function WhatsApp() {
             {activeTab === 'invoices' && (
                 <div className="wa-tab-content">
                     <div className="wa-invoice-search-section">
-                        <h3>🧾 اختر عميل لإرسال فاتورته</h3>
+                        <h3><Receipt size={18} /> اختر عميل لإرسال فاتورته</h3>
                         <input type="text" placeholder="ابحث عن عميل بالاسم أو الرقم..." value={invoiceCustomerSearch} onChange={e => setInvoiceCustomerSearch(e.target.value)} className="wa-invoice-search" />
                     </div>
                     <div className="wa-invoice-customers-grid">
@@ -575,10 +576,13 @@ export default function WhatsApp() {
             {sending && bulkProgress && (
                 <div className="wa-modal-overlay">
                     <div className="wa-modal">
-                        <h3>📤 جاري الإرسال...</h3>
+                        <h3><Send size={20} /> جاري الإرسال...</h3>
                         <div className="wa-progress-bar"><div className="wa-progress-fill" style={{ width: `${(bulkProgress.current / bulkProgress.total) * 100}%` }} /></div>
                         <p>{toArabicNum(bulkProgress.current)} / {toArabicNum(bulkProgress.total)}</p>
-                        <p>✅ {toArabicNum(bulkProgress.sentCount)} | ❌ {toArabicNum(bulkProgress.failedCount)}</p>
+                        <p style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}><CheckCircle size={16} color="#10b981" /> {toArabicNum(bulkProgress.sentCount)}</span>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}><XCircle size={16} color="#ef4444" /> {toArabicNum(bulkProgress.failedCount)}</span>
+                        </p>
                     </div>
                 </div>
             )}
@@ -587,16 +591,19 @@ export default function WhatsApp() {
             {results && (
                 <div className="wa-modal-overlay" onClick={() => setResults(null)}>
                     <div className="wa-modal wa-results-modal" onClick={e => e.stopPropagation()}>
-                        <h3>📊 نتائج الإرسال</h3>
+                        <h3><BarChart size={20} /> نتائج الإرسال</h3>
                         <div className="wa-results-summary">
-                            <span className="wa-result-sent">✅ {toArabicNum(results.summary?.sent || 0)} نجح</span>
-                            <span className="wa-result-failed">❌ {toArabicNum(results.summary?.failed || 0)} فشل</span>
+                            <span className="wa-result-sent"><CheckCircle size={16} /> {toArabicNum(results.summary?.sent || 0)} نجح</span>
+                            <span className="wa-result-failed"><XCircle size={16} /> {toArabicNum(results.summary?.failed || 0)} فشل</span>
                         </div>
                         <div className="wa-results-list">
                             {(results.results || []).map((r, i) => (
                                 <div key={i} className={`wa-result-item ${r.success ? 'success' : 'fail'}`}>
                                     <span>{r.customerName}</span>
-                                    <span>{r.success ? '✅' : `❌ ${r.error || ''}`}</span>
+                                    <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                        {r.success ? <CheckCircle size={16} color="#10b981" /> : <XCircle size={16} color="#ef4444" />}
+                                        {!r.success && <span style={{ fontSize: '12px' }}>{r.error || ''}</span>}
+                                    </span>
                                 </div>
                             ))}
                         </div>
@@ -631,7 +638,7 @@ export default function WhatsApp() {
             {invoiceModal && (
                 <div className="wa-modal-overlay" onClick={() => { setInvoiceModal(null); setInvoices([]); }}>
                     <div className="wa-modal wa-invoice-modal" onClick={e => e.stopPropagation()}>
-                        <h3>🧾 فواتير {invoiceModal.name}</h3>
+                        <h3><Receipt size={20} /> فواتير {invoiceModal.name}</h3>
                         {loadingInvoices ? <p>جاري التحميل...</p> : invoices.length === 0 ? <p>لا يوجد فواتير</p> : (
                             <div className="wa-invoice-table-container">
                                 <table className="wa-invoice-table">
@@ -676,8 +683,9 @@ export default function WhatsApp() {
                                                             className="wa-btn wa-btn-send-inv" 
                                                             onClick={() => sendInvoiceImage(inv.id, inv.type)} 
                                                             disabled={sendingInvoice}
+                                                            style={{ display: 'flex', alignItems: 'center', gap: '5px', margin: '0 auto' }}
                                                         >
-                                                            {sendingInvoice ? '⏳' : '📤'} إرسال واتساب
+                                                            {sendingInvoice ? <Loader size={16} className="spinner" /> : <Send size={16} />} إرسال واتساب
                                                         </button>
                                                     </td>
                                                 </tr>

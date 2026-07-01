@@ -13,7 +13,24 @@ const fs = require('fs');
 
 // ─── Defaults ───────────────────────────────────────────
 const DEFAULT_COUNTRY_CODE = '20'; // Egypt
-const RATE_LIMIT_DELAY_MS = 4000;  // 4 seconds between messages
+const RATE_LIMIT_DELAY_MS = 4000;  // Base: 4 seconds between messages
+
+// ─── Anti-Ban Configuration ─────────────────────────────
+const ANTI_BAN = {
+    // Typing simulation: min/max milliseconds to "type" before sending
+    TYPING_MIN_MS: 2000,
+    TYPING_MAX_MS: 5000,
+    // Random delay between bulk messages (added on top of RATE_LIMIT_DELAY_MS)
+    RANDOM_EXTRA_DELAY_MIN_MS: 1000,
+    RANDOM_EXTRA_DELAY_MAX_MS: 6000,
+    // After every N messages, take a longer pause
+    LONG_PAUSE_EVERY_N: 8,
+    LONG_PAUSE_MIN_MS: 15000,  // 15 seconds
+    LONG_PAUSE_MAX_MS: 35000,  // 35 seconds
+    // "seen" / read simulation delay
+    READ_DELAY_MIN_MS: 500,
+    READ_DELAY_MAX_MS: 1500,
+};
 
 // ─── Phone Number Normaliser ────────────────────────────
 function normalizePhoneNumber(phone, countryCode = DEFAULT_COUNTRY_CODE) {
@@ -62,6 +79,27 @@ function buildCustomerMessage(customer, messageTemplate) {
 // ─── Sleep Utility ──────────────────────────────────────
 function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+// ─── Random Int in Range ────────────────────────────────
+function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// ─── Random Delay ───────────────────────────────────────
+function randomDelay(minMs, maxMs) {
+    return sleep(randomInt(minMs, maxMs));
+}
+
+// ─── Add invisible variation to message (anti-pattern detection) ─
+function addMessageVariation(text) {
+    if (!text) return text;
+    // Add a zero-width space at a random position to make each message unique
+    // This prevents WhatsApp from detecting identical bulk messages
+    const chars = ['\u200B', '\u200C', '\u200D', '\uFEFF'];
+    const char = chars[Math.floor(Math.random() * chars.length)];
+    const pos = randomInt(1, Math.max(1, text.length - 1));
+    return text.slice(0, pos) + char + text.slice(pos);
 }
 
 // ─── WhatsApp Service Class ─────────────────────────────
@@ -222,7 +260,7 @@ class WhatsAppService {
         });
     }
 
-    async sendTextMessage(phone, text) {
+    async sendTextMessage(phone, text, { simulateTyping = true } = {}) {
         if (!this.client || this.status !== 'connected') {
             return { success: false, error: 'واتساب غير متصل. يرجى مسح QR Code أولاً.' };
         }
@@ -238,7 +276,28 @@ class WhatsAppService {
                 return { success: false, error: 'هذا الرقم غير مسجل في واتساب.' };
             }
 
-            await this.client.sendMessage(chatId, text);
+            // ── Anti-Ban: Simulate human behavior ──
+            if (simulateTyping) {
+                try {
+                    const chat = await this.client.getChatById(chatId);
+                    
+                    // 1. Simulate "seen" (mark as read)
+                    await randomDelay(ANTI_BAN.READ_DELAY_MIN_MS, ANTI_BAN.READ_DELAY_MAX_MS);
+                    
+                    // 2. Simulate typing indicator
+                    await chat.sendStateTyping();
+                    await randomDelay(ANTI_BAN.TYPING_MIN_MS, ANTI_BAN.TYPING_MAX_MS);
+                    await chat.clearState();
+                } catch (typingErr) {
+                    // If typing simulation fails, continue sending anyway
+                    console.warn('[WhatsApp] Typing simulation failed (non-critical):', typingErr.message);
+                }
+            }
+
+            // 3. Add invisible variation to prevent duplicate detection
+            const variedText = addMessageVariation(text);
+
+            await this.client.sendMessage(chatId, variedText);
             return { success: true };
         } catch (error) {
             console.error('[WhatsApp] Send text error:', error);
@@ -262,8 +321,20 @@ class WhatsAppService {
                 return { success: false, error: 'هذا الرقم غير مسجل في واتساب.' };
             }
 
+            // ── Anti-Ban: Simulate typing before sending image ──
+            try {
+                const chat = await this.client.getChatById(chatId);
+                await randomDelay(ANTI_BAN.READ_DELAY_MIN_MS, ANTI_BAN.READ_DELAY_MAX_MS);
+                await chat.sendStateRecording(); // Show "recording" for media
+                await randomDelay(ANTI_BAN.TYPING_MIN_MS, ANTI_BAN.TYPING_MAX_MS);
+                await chat.clearState();
+            } catch (typingErr) {
+                console.warn('[WhatsApp] Typing simulation failed (non-critical):', typingErr.message);
+            }
+
             const media = new MessageMedia('image/png', base64Image, 'invoice.png');
-            await this.client.sendMessage(chatId, media, { caption });
+            const variedCaption = caption ? addMessageVariation(caption) : '';
+            await this.client.sendMessage(chatId, media, { caption: variedCaption });
             return { success: true };
         } catch (error) {
             console.error('[WhatsApp] Send image error:', error);
@@ -361,7 +432,11 @@ module.exports = {
     normalizePhoneNumber,
     phoneToWhatsAppId,
     buildCustomerMessage,
+    addMessageVariation,
     sleep,
+    randomInt,
+    randomDelay,
     RATE_LIMIT_DELAY_MS,
-    DEFAULT_COUNTRY_CODE
+    DEFAULT_COUNTRY_CODE,
+    ANTI_BAN
 };

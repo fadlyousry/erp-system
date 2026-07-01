@@ -474,7 +474,7 @@ function registerDatabaseIpcHandlers(getDbService) {
     });
 
     // ==================== WhatsApp (whatsapp-web.js) ====================
-    const { getWhatsAppService, normalizePhoneNumber, buildCustomerMessage, sleep, RATE_LIMIT_DELAY_MS } = require('./whatsapp-service');
+    const { getWhatsAppService, normalizePhoneNumber, buildCustomerMessage, sleep, randomDelay, RATE_LIMIT_DELAY_MS, ANTI_BAN } = require('./whatsapp-service');
     const { BrowserWindow } = require('electron');
     const { app } = require('electron');
     const path = require('path');
@@ -736,9 +736,28 @@ function registerDatabaseIpcHandlers(getDbService) {
                 });
             }
 
-            // Rate limiting
+            // Anti-Ban: Smart delay between messages
             if (i < customers.length - 1) {
+                // Base delay + random extra
                 await sleep(RATE_LIMIT_DELAY_MS);
+                await randomDelay(ANTI_BAN.RANDOM_EXTRA_DELAY_MIN_MS, ANTI_BAN.RANDOM_EXTRA_DELAY_MAX_MS);
+
+                // Every N messages, take a longer "human" break
+                if ((i + 1) % ANTI_BAN.LONG_PAUSE_EVERY_N === 0) {
+                    console.log(`[WhatsApp] Anti-ban: Taking a long pause after ${i + 1} messages...`);
+                    if (event?.sender && !event.sender.isDestroyed()) {
+                        event.sender.send('whatsapp:bulkProgress', {
+                            current: i + 1,
+                            total: customers.length,
+                            sentCount,
+                            failedCount,
+                            lastCustomer: customer.name,
+                            lastResult: result.success,
+                            pausing: true
+                        });
+                    }
+                    await randomDelay(ANTI_BAN.LONG_PAUSE_MIN_MS, ANTI_BAN.LONG_PAUSE_MAX_MS);
+                }
             }
         }
 

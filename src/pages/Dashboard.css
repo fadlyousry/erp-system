@@ -45,7 +45,7 @@
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #2563eb;
+  color: #008ae6;
   margin: 0;
 }
 
@@ -58,7 +58,7 @@
 }
 
 .db-hero-name {
-  color: #2563eb;
+  color: #008ae6;
 }
 
 .db-hero-sub {
@@ -92,13 +92,13 @@
 .db-btn:hover { }
 
 .db-btn-primary {
-  background: linear-gradient(135deg, #2563eb, #1e40af);
+  background: linear-gradient(135deg, #008ae6, #004b7c);
   color: #fff;
-  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
+  box-shadow: 0 10px 25px rgba(0, 138, 230, 0.2);
 }
 
 .db-btn-primary:hover {
-  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 14px 30px rgba(0, 138, 230, 0.3);
 }
 
 .db-btn-secondary {
@@ -148,7 +148,7 @@
 .db-clock-period {
   font-size: 18px;
   font-weight: 700;
-  color: #2563eb;
+  color: #008ae6;
   margin-right: 4px;
 }
 
@@ -215,8 +215,8 @@
 
 .db-card-btn:hover {
   background: #fff;
-  border-color: #2563eb;
-  box-shadow: 0 12px 30px rgba(37, 99, 235, 0.12);
+  border-color: #008ae6;
+  box-shadow: 0 12px 30px rgba(0, 138, 230, 0.12);
 }
 
 .db-card-icon {
@@ -233,7 +233,7 @@
 }
 
 .db-card-btn:hover .db-card-icon {
-  background: #2563eb;
+  background: #008ae6;
   color: #fff;
 }
 

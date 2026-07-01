@@ -8,16 +8,15 @@ const COMMANDS = [
   // Navigation
   { id: 'nav-dashboard', type: 'nav', page: 'dashboard', keywords: ['رئيسية', 'لوحة', 'تحكم', 'dashboard', 'home', 'الرئيسية'], label: 'لوحة التحكم', icon: '📊', description: 'عرض الملخص العام والإحصائيات' },
   { id: 'nav-pos', type: 'nav', page: 'pos', keywords: ['بيع', 'فاتورة', 'كاشير', 'pos', 'sale', 'سريع', 'جديدة'], label: 'فاتورة بيع جديدة', icon: '🛒', description: 'فتح شاشة البيع السريع' },
+  { id: 'nav-customers', type: 'nav', page: 'customers', keywords: ['عميل', 'عملاء', 'زبون', 'customers'], label: 'العملاء', icon: '👥', description: 'إدارة بيانات العملاء وحساباتهم' },
+  { id: 'nav-products', type: 'nav', page: 'products', keywords: ['صنف', 'أصناف', 'منتج', 'منتجات', 'مخزن', 'products', 'item'], label: 'الأصناف والمنتجات', icon: '📦', description: 'إدارة قائمة الأصناف والمخزون' },
   { id: 'nav-sales', type: 'nav', page: 'sales', keywords: ['مبيعات', 'سابقة', 'سجل', 'الفواتير', 'sales'], label: 'سجل المبيعات', icon: '📋', description: 'عرض وإدارة فواتير البيع السابقة' },
   { id: 'nav-purchases', type: 'nav', page: 'purchases', keywords: ['شراء', 'توريد', 'مشتريات', 'جديدة', 'purchase'], label: 'فاتورة مشتريات جديدة', icon: '📥', description: 'إضافة فاتورة مشتريات من مورد' },
   { id: 'nav-purchaseHistory', type: 'nav', page: 'purchaseHistory', keywords: ['مشتريات', 'سابقة', 'سجل', 'موردين', 'purchases'], label: 'سجل المشتريات', icon: '📚', description: 'عرض وإدارة فواتير المشتريات السابقة' },
-  { id: 'nav-products', type: 'nav', page: 'products', keywords: ['صنف', 'أصناف', 'منتج', 'منتجات', 'مخزن', 'products', 'item'], label: 'الأصناف والمنتجات', icon: '📦', description: 'إدارة قائمة الأصناف والمخزون' },
-  { id: 'nav-customers', type: 'nav', page: 'customers', keywords: ['عميل', 'عملاء', 'زبون', 'customers'], label: 'العملاء', icon: '👥', description: 'إدارة بيانات العملاء وحساباتهم' },
   { id: 'nav-suppliers', type: 'nav', page: 'suppliers', keywords: ['مورد', 'موردين', 'شركات', 'suppliers'], label: 'الموردين', icon: '🚚', description: 'إدارة بيانات الموردين والمستحقات' },
   { id: 'nav-treasury', type: 'nav', page: 'treasury', keywords: ['خزنة', 'خزينة', 'حسابات', 'مالية', 'فلوس', 'نقدي', 'treasury'], label: 'الخزينة والحسابات', icon: '🏦', description: 'عرض حركة النقدية والمصاريف' },
   { id: 'reports', label: 'التقارير والإحصائيات', description: 'بحث في التقارير والرسوم البيانية', icon: '📊', type: 'nav', page: 'reports', keywords: ['تقرير', 'احصائيات', 'ارباح', 'خسائر'] },
   { id: 'finance-ai', label: 'تحليل الأداء المالي (AI)', description: 'رؤية ذكية لأرباح ومصاريف المحل', icon: '🧠', type: 'ai-finance', keywords: ['تحليل', 'وضع مالي', 'ذكاء اصطناعي', 'نصيحة'] },
-  { id: 'customers', label: 'إدارة العملاء', description: 'بحث وإضافة عملاء جدد', icon: '👥', page: 'customers', type: 'nav', keywords: ['عميل', 'زبون', 'مديونيات'] },
   { id: 'nav-settings', type: 'nav', page: 'settings', keywords: ['إعدادات', 'ضبط', 'تغيير', 'نطام', 'settings'], label: 'إعدادات النظام', icon: '⚙️', description: 'تغيير إعدادات المؤسسة والبرنامج' },
   
   // Quick Actions (Specific reports)
@@ -30,9 +29,6 @@ const SmartAssistant = ({ isOpen, onClose, onNavigate, onOpenFinancialDoctor, ha
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [dynamicResults, setDynamicResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [isListening, setIsListening] = useState(false);
-  const [transcript, setTranscript] = useState('');
-  const recognitionRef = useRef(null);
   const inputRef = useRef(null);
   const resultsRef = useRef(null);
   const searchTimeoutRef = useRef(null);
@@ -112,6 +108,7 @@ const SmartAssistant = ({ isOpen, onClose, onNavigate, onOpenFinancialDoctor, ha
               id: `cust-${c.id}`,
               type: 'nav',
               page: 'customers',
+              action: 'VIEW_LEDGER',
               label: c.name,
               icon: '👥',
               description: `عميل - ${c.phone || 'بدون رقم'}`,
@@ -133,47 +130,7 @@ const SmartAssistant = ({ isOpen, onClose, onNavigate, onOpenFinancialDoctor, ha
     };
   }, [query, isOpen]);
 
-  // Speech Recognition Setup
-  useEffect(() => {
-    if (!('webkitSpeechRecognition' in window)) {
-      console.warn('Speech recognition not supported');
-      return;
-    }
-
-    const SpeechRecognition = window.webkitSpeechRecognition;
-    recognitionRef.current = new SpeechRecognition();
-    recognitionRef.current.continuous = false;
-    recognitionRef.current.interimResults = true;
-    recognitionRef.current.lang = 'ar-EG';
-
-    recognitionRef.current.onresult = (event) => {
-      const current = event.resultIndex;
-      const resultTranscript = event.results[current][0].transcript;
-      setQuery(resultTranscript);
-      
-      if (event.results[current].isFinal) {
-        setIsListening(false);
-        handleVoiceCommand(resultTranscript);
-      }
-    };
-
-    recognitionRef.current.onend = () => setIsListening(false);
-    recognitionRef.current.onerror = () => setIsListening(false);
-
-  }, []);
-
-  const toggleListening = () => {
-    if (isListening) {
-      recognitionRef.current?.stop();
-      setIsListening(false);
-    } else {
-      setQuery('');
-      recognitionRef.current?.start();
-      setIsListening(true);
-    }
-  };
-
-  const handleVoiceCommand = (text) => {
+  const handleSmartCommand = (text) => {
     const analysis = parseEgyptianCommand(text);
     console.log('Voice Analysis:', analysis);
     
@@ -254,7 +211,7 @@ const SmartAssistant = ({ isOpen, onClose, onNavigate, onOpenFinancialDoctor, ha
         if (selectedCmd) {
           executeCommand(selectedCmd);
         } else if (query.trim() !== '') {
-          handleVoiceCommand(query);
+          handleSmartCommand(query);
         }
       } else if (e.key === 'Escape') {
         onClose();
@@ -275,9 +232,14 @@ const SmartAssistant = ({ isOpen, onClose, onNavigate, onOpenFinancialDoctor, ha
   const executeCommand = (cmd) => {
     if (cmd.type === 'nav') {
       onNavigate(cmd.page);
+      if (cmd.action === 'VIEW_LEDGER' && cmd.data?.id) {
+        setTimeout(() => {
+          emitCustomerCommand({ action: 'VIEW_LEDGER', data: { id: cmd.data.id, name: cmd.data.name } });
+        }, 100);
+      }
       onClose();
     } else if (cmd.type === 'ai') {
-      handleVoiceCommand(query);
+      handleSmartCommand(query);
     } else if (cmd.type === 'ai-finance') {
       handleFinanceAI();
     }
@@ -320,26 +282,10 @@ const SmartAssistant = ({ isOpen, onClose, onNavigate, onOpenFinancialDoctor, ha
       >
         {/* Search Input */}
         <div style={{ padding: '16px', borderBottom: '1px solid #f1f5f9', display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <button 
-            onClick={toggleListening}
-            style={{ 
-              background: 'transparent', 
-              border: 'none', 
-              fontSize: '24px', 
-              cursor: 'pointer',
-              position: 'relative'
-            }}
-          >
-            {isListening ? (
-              <span className="listening-pulse">🛑</span>
-            ) : (
-              '🎙️'
-            )}
-          </button>
           <input 
             ref={inputRef}
             type="text"
-            placeholder={isListening ? 'جاري الاستماع...' : 'اكتب ما تبحث عنه (مثلاً: بيع، منتجات، رصيد...)'}
+            placeholder="اكتب ما تبحث عنه (مثلاً: بيع، منتجات، رصيد...)"
             value={query}
             onChange={e => {
               setQuery(e.target.value);
@@ -355,7 +301,7 @@ const SmartAssistant = ({ isOpen, onClose, onNavigate, onOpenFinancialDoctor, ha
             }}
           />
           <div style={{ display: 'flex', gap: '4px' }}>
-            <kbd style={{ padding: '2px 6px', backgroundColor: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: '4px', fontSize: '10px', color: '#64748b' }}>CTRL + K</kbd>
+            <kbd style={{ padding: '2px 6px', backgroundColor: '#f1f5f9', border: '1px solid #e2e8f0', borderRadius: '4px', fontSize: '10px', color: '#64748b' }}>F12</kbd>
           </div>
         </div>
 
@@ -469,15 +415,6 @@ const SmartAssistant = ({ isOpen, onClose, onNavigate, onOpenFinancialDoctor, ha
         @keyframes slideDown {
           from { opacity: 0; transform: translateY(-20px) scale(0.95); }
           to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        .listening-pulse {
-          display: inline-block;
-          animation: pulse 1s infinite;
-        }
-        @keyframes pulse {
-          0% { transform: scale(1); opacity: 1; }
-          50% { transform: scale(1.2); opacity: 0.7; }
-          100% { transform: scale(1); opacity: 1; }
         }
         .no-scrollbar::-webkit-scrollbar {
           display: none;

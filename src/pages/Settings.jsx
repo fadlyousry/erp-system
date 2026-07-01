@@ -57,7 +57,8 @@ import {
   ShoppingCart,
   Undo2,
   RotateCcw,
-  Share2
+  Share2,
+  Headphones
 } from 'lucide-react';
 
 const DEFAULT_BACKUP_SETTINGS = {
@@ -185,6 +186,7 @@ const SETTINGS_TABS = [
   { id: 'import', label: 'استيراد العملاء', icon: <Upload /> },
   { id: 'productsImport', label: 'استيراد المنتجات', icon: <Package /> },
   { id: 'aiMarketing', label: 'التسويق الذكي (AI)', icon: <Share2 /> },
+  { id: 'support', label: 'الدعم الفني', icon: <Headphones /> },
 ];
 
 const BACKUP_INTERVAL_UNITS = [
@@ -398,12 +400,8 @@ export default function Settings() {
     window.api.onUpdateStatus((statusData) => {
       if (!checkingForUpdateRef.current) return;
 
-      if (statusData.status === 'up-to-date') {
-        safeAlert('أنت تستخدم أحدث إصدار متاح، لا توجد تحديثات جديدة حالياً.', null, { title: 'أحدث إصدار' });
-        checkingForUpdateRef.current = false;
-        setCheckingUpdate(false);
-      } else if (statusData.status === 'available' || statusData.status === 'error') {
-        // Let UpdateNotification handle the UI for available updates and errors
+      if (statusData.status === 'up-to-date' || statusData.status === 'available' || statusData.status === 'error') {
+        // Let UpdateNotification handle the UI for all these states
         checkingForUpdateRef.current = false;
         setCheckingUpdate(false);
       }
@@ -2053,26 +2051,6 @@ export default function Settings() {
 
   return (
     <div className="settings-page">
-      <header className="settings-header">
-        <div className="settings-header-main">
-          <div className="settings-header-badge">
-            <img src="Screenshot 2026-03-24 142140.png" alt={settingsBrandName} className="settings-logo-img" />
-          </div>
-          <div>
-            <h1>الإعدادات</h1>
-            <p>· إدارة إعدادات النظام والطباعة والاستيراد والنسخ الاحتياطي من مكان واحد بشكل أوضح وأسرع.</p>
-          </div>
-        </div>
-
-        <div className="settings-header-stats">
-          {headerStats.map((item) => (
-            <div key={item.label} className="settings-header-stat">
-              <span>{item.label}</span>
-              <strong>{item.value}</strong>
-            </div>
-          ))}
-        </div>
-      </header>
 
       <div className="settings-layout">
         {/* Sidebar Navigation */}
@@ -2095,9 +2073,6 @@ export default function Settings() {
           {activeTab === 'basic' && (
             <section className="settings-card settings-basic-card">
               <h2><SettingsIcon className="w-5 h-5" /> الإعدادات العامة</h2>
-              <p className="settings-hint">بيانات الشركة والإعدادات العامة الأساسية للنظام.</p>
-
-              <p className="settings-section-title">🏢 بيانات الشركة</p>
 
               <div className="settings-form-group">
                 <label htmlFor="companyName" className="settings-form-label">
@@ -3963,6 +3938,65 @@ export default function Settings() {
                 >
                   {savingMarketingSettings ? 'جاري الحفظ...' : 'حفظ إعدادات التسويق'}
                 </button>
+              </div>
+            </section>
+          )}
+
+          {activeTab === 'support' && (
+            <section className="settings-section" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px', background: 'transparent', boxShadow: 'none' }}>
+              <div style={{
+                background: 'linear-gradient(135deg, #1e293b, #0f172a)',
+                borderRadius: '24px',
+                padding: '40px',
+                width: '100%',
+                maxWidth: '600px',
+                boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                textAlign: 'center',
+                color: 'white',
+                position: 'relative',
+                overflow: 'hidden'
+              }}>
+                <div style={{
+                  position: 'absolute', top: '-50px', right: '-50px', width: '150px', height: '150px', background: 'rgba(56, 189, 248, 0.1)', borderRadius: '50%'
+                }} />
+                <div style={{
+                  position: 'absolute', bottom: '-50px', left: '-50px', width: '200px', height: '200px', background: 'rgba(56, 189, 248, 0.05)', borderRadius: '50%'
+                }} />
+                
+                <img src="fyc_logo.png" alt="FYC Solutions Logo" style={{ width: '200px', marginBottom: '20px', zIndex: 1, position: 'relative' }} />
+                
+                <h2 style={{ fontSize: '28px', fontWeight: '800', marginBottom: '10px', zIndex: 1, position: 'relative' }}>FYC Solutions</h2>
+                <p style={{ fontSize: '16px', color: '#94a3b8', marginBottom: '30px', zIndex: 1, position: 'relative' }}>
+                  شريكك التقني لتطوير وإدارة أعمالك باحترافية
+                </p>
+                
+                <div style={{ background: 'rgba(255, 255, 255, 0.05)', borderRadius: '16px', padding: '20px', marginBottom: '20px', zIndex: 1, position: 'relative', textAlign: 'right' }}>
+                  <h3 style={{ fontSize: '18px', fontWeight: 'bold', marginBottom: '15px', color: '#38bdf8' }}>تواصل مع الدعم الفني</h3>
+                  
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
+                    <div style={{ background: 'rgba(56, 189, 248, 0.1)', padding: '10px', borderRadius: '50%', color: '#38bdf8' }}>
+                      <Headphones size={20} />
+                    </div>
+                    <div>
+                      <p style={{ margin: 0, fontSize: '14px', color: '#cbd5e1' }}>رقم الهاتف / واتساب</p>
+                      <p style={{ margin: 0, fontSize: '16px', fontWeight: 'bold', direction: 'ltr', textAlign: 'left' }}>01210677917</p>
+                    </div>
+                  </div>
+                  
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
+                    <div style={{ background: 'rgba(56, 189, 248, 0.1)', padding: '10px', borderRadius: '50%', color: '#38bdf8' }}>
+                      <Share2 size={20} />
+                    </div>
+                    <div>
+                      <p style={{ margin: 0, fontSize: '14px', color: '#cbd5e1' }}>الموقع الإلكتروني</p>
+                      <p style={{ margin: 0, fontSize: '16px', fontWeight: 'bold', direction: 'ltr', textAlign: 'left' }}>www.fyc-solutions.com</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <p style={{ fontSize: '14px', color: '#64748b', margin: 0, zIndex: 1, position: 'relative' }}>
+                  FYC Store Manager v1.0.0
+                </p>
               </div>
             </section>
           )}

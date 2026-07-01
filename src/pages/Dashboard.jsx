@@ -91,7 +91,7 @@ export default function Dashboard({ user }) {
         <div className="db-hero-text">
           <p className="db-hero-eyebrow">النظام المتكامل لإدارة المبيعات</p>
           <h1 className="db-hero-title">لوحة التحكم الرئيسية</h1>
-          <p className="db-hero-sub">مرحباً بك في نظام FADL ERP. يمكنك الوصول السريع لكافة الوظائف الأساسية من هنا.</p>
+          <p className="db-hero-sub">مرحباً بك في نظام FYC Store Manager. يمكنك الوصول السريع لكافة الوظائف الأساسية من هنا.</p>
 
           <div className="db-hero-btns">
             <button className="db-btn db-btn-primary" onClick={() => handleNavigate('pos')}>

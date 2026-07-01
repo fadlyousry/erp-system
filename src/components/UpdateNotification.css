@@ -1,96 +1,171 @@
+.update-notification-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(6px);
+  direction: rtl;
+  font-family: inherit;
+  animation: updateOverlayIn 0.3s ease;
+}
+
+@keyframes updateOverlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.update-notification-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  padding: 36px 32px 28px;
+  width: 420px;
+  max-width: 92vw;
+  text-align: center;
+  animation: updateCardIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes updateCardIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Icon ── */
+.update-card-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+  font-size: 28px;
+}
+.update-card-icon.available { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+.update-card-icon.downloading { background: linear-gradient(135deg, #e0f2fe, #bae6fd); }
+.update-card-icon.ready { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+.update-card-icon.error { background: linear-gradient(135deg, #fee2e2, #fecaca); }
+
+/* ── Title ── */
+.update-card-title {
+  margin: 0 0 6px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+/* ── Subtitle / description ── */
+.update-card-desc {
+  margin: 0 0 22px;
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+/* ── Progress bar ── */
+.update-card-progress-wrap {
+  margin-bottom: 20px;
+}
+
+.update-card-progress-track {
+  width: 100%;
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: 99px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.update-card-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+
+.update-card-progress-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* ── Actions ── */
+.update-card-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.update-card-btn-primary {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.update-card-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+}
+
+.update-card-btn-secondary {
+  background: transparent;
+  color: #64748b;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 10px 22px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.update-card-btn-secondary:hover {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+/* ── Spinner for downloading ── */
+.update-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #bfdbfe;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: updateSpin 0.8s linear infinite;
+  margin: 0 auto 10px;
+}
+@keyframes updateSpin {
+  to { transform: rotate(360deg); }
+}
+
+.update-card-error-text {
+  color: #ef4444;
+  font-size: 13px;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+/* ── Small bottom notification (for non-blocking states) ── */
 .update-notification-container {
   position: fixed;
   bottom: 20px;
   right: 20px;
   z-index: 9999;
   background-color: white;
-  border-radius: 8px;
+  border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   padding: 16px;
   width: 320px;
   direction: rtl;
   font-family: inherit;
-  border-right: 4px solid #3b82f6; /* Blue border for emphasis */
-}
-
-.update-notification-content h4 {
-  margin: 0 0 8px 0;
-  color: #1f2937;
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.update-notification-content p {
-  margin: 0 0 16px 0;
-  color: #4b5563;
-  font-size: 14px;
-}
-
-.update-progress-container {
-  margin-bottom: 16px;
-}
-
-.update-progress-bar {
-  width: 100%;
-  height: 8px;
-  background-color: #e5e7eb;
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 4px;
-}
-
-.update-progress-fill {
-  height: 100%;
-  background-color: #3b82f6;
-  transition: width 0.3s ease;
-}
-
-.update-progress-text {
-  font-size: 12px;
-  color: #6b7280;
-  display: block;
-  text-align: left;
-}
-
-.update-notification-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-}
-
-.btn-update-primary {
-  background-color: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 6px 12px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.btn-update-primary:hover {
-  background-color: #2563eb;
-}
-
-.btn-update-secondary {
-  background-color: transparent;
-  color: #4b5563;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  padding: 6px 12px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-update-secondary:hover {
-  background-color: #f3f4f6;
-  color: #1f2937;
-}
-
-.update-error-text {
-  color: #ef4444;
-  font-size: 12px;
-  margin-bottom: 8px;
+  border-right: 4px solid #3b82f6;
 }

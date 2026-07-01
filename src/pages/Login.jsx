@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 import { getCompanyName } from '../utils/appSettings';
 
 const REMEMBERED_LOGIN_KEY = 'remembered_login_credentials';
@@ -35,6 +36,7 @@ export default function Login({ onLogin }) {
   const [loading, setLoading] = useState(false);
   const [isDbPreparing, setIsDbPreparing] = useState(false);
   const [retryCount, setRetryCount] = useState(0);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [showSettings, setShowSettings] = useState(false);
   const [logoClicks, setLogoClicks] = useState(0);
@@ -66,7 +68,7 @@ export default function Login({ onLogin }) {
     }
   };
 
-  const companyName = getCompanyName() || 'FADL ERP';
+  const companyName = getCompanyName() || 'FYC Store Manager';
 
   const handleSubmit = async (e) => {
     if (e) e.preventDefault();
@@ -381,8 +383,8 @@ export default function Login({ onLogin }) {
 
         .lp-input:focus {
           outline: none;
-          border-color: #2563eb;
-          box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+          border-color: #008ae6;
+          box-shadow: 0 0 0 4px rgba(0, 138, 230, 0.1);
         }
 
         .lp-error {
@@ -415,7 +417,7 @@ export default function Login({ onLogin }) {
         .lp-remember input {
           width: 18px;
           height: 18px;
-          accent-color: #2563eb;
+          accent-color: #008ae6;
         }
 
         .lp-btn {
@@ -423,18 +425,18 @@ export default function Login({ onLogin }) {
           height: 56px;
           border: none;
           border-radius: 16px;
-          background: linear-gradient(135deg, #2563eb, #1e40af);
+          background: linear-gradient(135deg, #008ae6, #004b7c);
           color: #fff;
           font-size: 17px;
           font-weight: 800;
           cursor: pointer;
-          box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);
+          box-shadow: 0 10px 25px rgba(0, 138, 230, 0.25);
           transition: all 0.2s;
         }
 
         .lp-btn:hover:enabled {
           transform: translateY(-2px);
-          box-shadow: 0 15px 30px rgba(37, 99, 235, 0.35);
+          box-shadow: 0 15px 30px rgba(0, 138, 230, 0.35);
         }
 
         .lp-btn:active:enabled { transform: translateY(0); }
@@ -467,15 +469,29 @@ export default function Login({ onLogin }) {
           style={{ cursor: 'pointer', userSelect: 'none' }}
           title={logoClicks > 0 ? `اضغط ${5 - logoClicks} مرات إضافية للتهيئة` : ''}
         >
-          <div className="lp-logo-badge">
+          <div 
+            className="lp-logo-badge" 
+            style={{ 
+              width: '100%', 
+              height: 'auto', 
+              background: 'transparent', 
+              boxShadow: 'none', 
+              borderRadius: '0', 
+              padding: '10px 0' 
+            }}
+          >
             <img
-              src="icon.png"
-              alt={companyName}
-              className="lp-logo-img"
+              src="fyc_store_manager_logo_login.png"
+              alt="FYC Store Manager"
+              style={{ 
+                width: '100%', 
+                maxWidth: '280px', 
+                height: 'auto', 
+                objectFit: 'contain', 
+                display: 'block'
+              }}
             />
           </div>
-          <h1 className="lp-brand-name">{companyName}</h1>
-          <p className="lp-brand-sub">نظام إدارة الأعمال المتكامل</p>
         </div>
 
         {/* Form */}
@@ -498,16 +514,36 @@ export default function Login({ onLogin }) {
 
           <div className="lp-field">
             <label htmlFor="lp-password">كلمة المرور</label>
-            <input
-              id="lp-password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="lp-input"
-              placeholder="أدخل كلمة المرور"
-              autoComplete="current-password"
-              required
-            />
+            <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+              <input
+                id="lp-password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="lp-input"
+                placeholder="أدخل كلمة المرور"
+                autoComplete="current-password"
+                required
+                style={{ paddingLeft: '48px' }} // Make room for the icon on the left
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: 'absolute',
+                  left: '16px',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  color: '#94a3b8'
+                }}
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
           </div>
 
           <div className="lp-options">

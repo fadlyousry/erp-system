@@ -1198,7 +1198,8 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 1200,
         height: 800,
-        icon: path.join(__dirname, '../build/icon.ico'),
+        title: 'FYC -Store Manager',
+        icon: path.join(__dirname, '../public/icon.png'),
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             nodeIntegration: false,

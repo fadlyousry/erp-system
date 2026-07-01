@@ -945,7 +945,7 @@ export default function FirstRunSetup({ initialConfig, setupStatus, onCompleted 
         {/* Brand */}
         <div className="frs-brand">
           <div className="frs-logo">ERP</div>
-          <h1>FADL ERP</h1>
+          <h1>FYC Store Manager</h1>
           <p>تجهيز النظام للعمل على هذا الجهاز</p>
         </div>
 

@@ -412,45 +412,28 @@ function MainLayout({
         >
           <div 
             style={{ 
-              width: isSidebarCollapsed ? '48px' : '72px', 
-              height: isSidebarCollapsed ? '48px' : '72px', 
-              borderRadius: '16px',
-              backgroundColor: '#ffffff',
+              width: '100%', 
+              height: isSidebarCollapsed ? '48px' : '60px', 
+              backgroundColor: 'transparent',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               overflow: 'hidden',
+              padding: isSidebarCollapsed ? '0' : '0 20px',
+              transition: 'all 0.3s ease',
             }}
-   
           >
             <img 
-              src="icon.png" 
-              alt="FADL ERP Logo" 
+              src={isSidebarCollapsed ? "icon.png" : "fyc_store_manager_logo_transparent.png"} 
+              alt="FYC Store Manager" 
               style={{ 
-                width: '100%', 
-                height: '100%',
+                width: isSidebarCollapsed ? '36px' : '100%', 
+                height: isSidebarCollapsed ? '36px' : '100%',
                 objectFit: 'contain',
-                marginTop: '30%',
-                transform: 'scale(2.5)', // تكبير مع الحفاظ على التوسيط التام
+                transform: isSidebarCollapsed ? 'none' : 'scale(0.95)'
               }} 
             />
           </div>
-          {!isSidebarCollapsed && (
-            <h2
-              style={{
-                fontSize: '22px',
-                fontFamily: 'system-ui, sans-serif',
-                fontWeight: '800',
-                margin: 0,
-                textAlign: 'center',
-                letterSpacing: '1px',
-                color: '#ffffff',
-                whiteSpace: 'nowrap'
-              }}
-            >
-              FADL ERP
-            </h2>
-          )}
         </div>
 
           <nav 
