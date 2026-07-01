@@ -3386,7 +3386,7 @@ export default function Settings() {
               <div className="settings-range-wrap">
                 <input
                   type="range"
-                  min="7"
+                  min="1"
                   max="90"
                   step="1"
                   value={tempThreshold}

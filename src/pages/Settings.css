@@ -782,7 +782,7 @@
 }
 
 .settings-stat-box {
-  background: linear-gradient(135deg, #ffffff, #fafcfd);
+  background: linear-gradient(135deg, var(--settings-brand-soft), #ffffff);
   border: 1px solid var(--settings-border-light);
   border-radius: var(--radius-md);
   padding: 22px 18px;
@@ -798,7 +798,7 @@
 .settings-stat-box:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
-  border-color: rgba(15, 118, 110, 0.2);
+  border-color: var(--settings-brand-strong);
 }
 
 .settings-stat-box span {
@@ -809,17 +809,11 @@
 }
 
 .settings-stat-box strong {
-  color: var(--settings-text-main);
+  color: var(--settings-brand-strong);
   font-size: 1.6rem;
   font-weight: 900;
   font-family: 'Outfit', 'Tajawal', sans-serif;
 }
-
-/* Colored stat borders */
-.settings-stat-box:nth-child(1) { border-right: 4px solid var(--settings-brand); }
-.settings-stat-box:nth-child(2) { border-right: 4px solid #ef4444; }
-.settings-stat-box:nth-child(3) { border-right: 4px solid #f59e0b; }
-.settings-stat-box:nth-child(4) { border-right: 4px solid #10b981; }
 
 /* ─── Import Meta ─── */
 .settings-import-meta {

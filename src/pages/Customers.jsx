@@ -44,14 +44,14 @@ const useWorkspaceState = (key, initialValue, tabId) => {
     try {
       const saved = sessionStorage.getItem(`customer_ws_${tabId}_${key}`);
       if (saved !== null) return JSON.parse(saved);
-    } catch (e) {}
+    } catch (e) { }
     return initialValue;
   });
 
   useEffect(() => {
     try {
       sessionStorage.setItem(`customer_ws_${tabId}_${key}`, JSON.stringify(state));
-    } catch (e) {}
+    } catch (e) { }
   }, [key, state, tabId]);
 
   return [state, setState];
@@ -187,7 +187,7 @@ export function CustomerWorkspace({ tabId, tabTitle, isActive }) {
         const nameToSearch = data.name || '';
         if (nameToSearch) {
           // Search in customerLookup for the best match
-          const matched = customerLookup.find(c => 
+          const matched = customerLookup.find(c =>
             c.name.toLowerCase().includes(nameToSearch.toLowerCase())
           );
 
@@ -564,7 +564,7 @@ export function CustomerWorkspace({ tabId, tabTitle, isActive }) {
         overdueOnly: true,
         overdueThreshold
       };
-      
+
       const res = await window.api.getCustomers(params);
       if (res?.data && res.data.length > 0) {
         const html = generateOverdueReportHTML(res.data, overdueThreshold);
@@ -617,9 +617,9 @@ export function CustomerWorkspace({ tabId, tabTitle, isActive }) {
               width: '100%'
             }}
             onFocus={(e) => {
-              e.target.style.borderColor = '#2563eb';
+              e.target.style.borderColor = '#007accff';
               e.target.style.backgroundColor = '#fff';
-              e.target.style.boxShadow = '0 0 0 4px rgba(37, 99, 235, 0.1)';
+              e.target.style.boxShadow = '0 0 0 4px rgba(0, 138, 230, 0.1)';
             }}
             onBlur={(e) => {
               e.target.style.borderColor = '#e2e8f0';
@@ -633,7 +633,7 @@ export function CustomerWorkspace({ tabId, tabTitle, isActive }) {
         <div style={{ display: 'flex', gap: '8px', padding: '4px', backgroundColor: '#f1f5f9', borderRadius: '10px' }}>
           {[
             { id: 'all', label: 'الكل' },
-   
+
             { id: 'overdue', label: 'متأخر' }
           ].map((item) => (
             <button
@@ -644,7 +644,7 @@ export function CustomerWorkspace({ tabId, tabTitle, isActive }) {
                 borderRadius: '8px',
                 border: 'none',
                 backgroundColor: filterType === item.id ? '#fff' : 'transparent',
-                color: filterType === item.id ? '#2563eb' : '#64748b',
+                color: filterType === item.id ? '#008ae6' : '#64748b',
                 fontSize: '14px',
                 fontWeight: '700',
                 cursor: 'pointer',
@@ -700,8 +700,8 @@ export function CustomerWorkspace({ tabId, tabTitle, isActive }) {
 
           {showColumnMenu && (
             <>
-              <div 
-                style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 999 }} 
+              <div
+                style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 999 }}
                 onClick={() => setShowColumnMenu(false)}
               />
               <div style={{
@@ -722,15 +722,15 @@ export function CustomerWorkspace({ tabId, tabTitle, isActive }) {
                 </div>
                 <div style={{ maxHeight: '300px', overflowY: 'auto', paddingRight: '4px' }}>
                   {Object.keys(visibleColumns).map((col) => (
-                    <label 
-                      key={col} 
-                      style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        gap: '12px', 
-                        padding: '8px 4px', 
-                        cursor: 'pointer', 
-                        fontSize: '13px', 
+                    <label
+                      key={col}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px',
+                        padding: '8px 4px',
+                        cursor: 'pointer',
+                        fontSize: '13px',
                         color: '#475569',
                         transition: 'background 0.2s',
                         borderRadius: '6px'
@@ -772,6 +772,16 @@ export function CustomerWorkspace({ tabId, tabTitle, isActive }) {
           columnSearch={columnSearch}
           onColumnSearchChange={handleColumnSearchChange}
           selectedIndex={selectedSearchIndex}
+          sortCol={sortCol}
+          sortDir={sortDir}
+          onSortChange={(col) => {
+            if (sortCol === col) {
+              setSortDir(sortDir === 'asc' ? 'desc' : 'asc');
+            } else {
+              setSortCol(col);
+              setSortDir('asc');
+            }
+          }}
           overdueThreshold={overdueThreshold}
           highlightTerm={filteredSearchTerm}
           onShowLedger={handleShowLedger}
@@ -878,7 +888,7 @@ const CustomerTab = ({ tab, isActive, onSelect, onClose, canClose }) => {
       onClick={onSelect}
       style={{
         padding: "10px 18px",
-        background: isActive ? "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)" : "linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)",
+        background: isActive ? "linear-gradient(135deg, #03273fff 0%, #002a5aff 100%)" : "linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%)",
         color: isActive ? "white" : "#475569",
         borderRadius: "12px",
         cursor: "pointer",
@@ -888,7 +898,7 @@ const CustomerTab = ({ tab, isActive, onSelect, onClose, canClose }) => {
         minWidth: "140px",
         height: "42px",
         justifyContent: "space-between",
-        boxShadow: isActive ? "0 4px 12px rgba(37, 99, 235, 0.3)" : "inset 0 0 0 1px #e2e8f0",
+        boxShadow: isActive ? "0 4px 12px rgba(0, 138, 230, 0.3)" : "inset 0 0 0 1px #e2e8f0",
         transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
         fontWeight: isActive ? "700" : "600",
         fontSize: "14px",
@@ -908,14 +918,14 @@ const CustomerTab = ({ tab, isActive, onSelect, onClose, canClose }) => {
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <span style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
+        <span style={{
+          display: 'flex',
+          alignItems: 'center',
           justifyContent: 'center',
-          width: '8px', 
-          height: '8px', 
+          width: '8px',
+          height: '8px',
           borderRadius: '50%',
-          backgroundColor: isActive ? '#60a5fa' : '#cbd5e1'
+          backgroundColor: isActive ? '#7dd3fc' : '#cbd5e1'
         }} />
         <span>{tab.title}</span>
       </div>
@@ -1064,7 +1074,7 @@ export default function Customers() {
               backgroundColor: "white",
               fontSize: "16px",
               fontWeight: "900",
-              color: "#2563eb",
+              color: "#073385ff",
               boxShadow: "0 1px 3px rgba(0,0,0,0.1)"
             }}>+</div>
           </button>
@@ -1075,7 +1085,7 @@ export default function Customers() {
           <button
             onClick={() => window.dispatchEvent(new CustomEvent('customers-export', { detail: { tabId: activeTabId } }))}
             style={{
-              background: 'linear-gradient(135deg, #4f46e5 0%, #3730a3 100%)',
+              background: 'linear-gradient(135deg, #475569 0%, #334155 100%)',
               color: 'white',
               padding: '10px 18px',
               border: 'none',
@@ -1086,16 +1096,16 @@ export default function Customers() {
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              boxShadow: '0 4px 12px rgba(79, 70, 229, 0.3)',
+              boxShadow: '0 4px 12px rgba(51, 65, 85, 0.3)',
               transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-1px)';
-              e.currentTarget.style.boxShadow = '0 6px 16px rgba(79, 70, 229, 0.4)';
+              e.currentTarget.style.boxShadow = '0 6px 16px rgba(51, 65, 85, 0.4)';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 4px 12px rgba(79, 70, 229, 0.3)';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(51, 65, 85, 0.3)';
             }}
             title="تحميل قالب استيراد البيانات"
           >
@@ -1107,7 +1117,7 @@ export default function Customers() {
           <button
             onClick={() => window.dispatchEvent(new CustomEvent('customers-add', { detail: { tabId: activeTabId } }))}
             style={{
-              background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+              background: 'linear-gradient(135deg, #0087e0ff 0%, hsla(209, 100%, 43%, 1.00) 100%)',
               color: 'white',
               padding: '10px 20px',
               border: 'none',
@@ -1118,16 +1128,16 @@ export default function Customers() {
               alignItems: 'center',
               gap: '10px',
               height: '42px',
-              boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)',
+              boxShadow: '0 4px 12px rgba(0, 138, 230, 0.3)',
               transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-1px)';
-              e.currentTarget.style.boxShadow = '0 6px 16px rgba(16, 185, 129, 0.4)';
+              e.currentTarget.style.boxShadow = '0 6px 16px rgba(0, 138, 230, 0.4)';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.3)';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 138, 230, 0.3)';
             }}
           >
             <Plus size={20} />

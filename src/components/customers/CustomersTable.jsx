@@ -230,7 +230,10 @@ const CustomersTable = memo(function CustomersTable({
     onPayment,
     onEdit,
     onDelete,
-    listRef
+    listRef,
+    sortCol,
+    sortDir,
+    onSortChange
 }) {
     const viewportHeight = useViewportHeight();
     const columnOrder = useMemo(() => getVisibleColumnOrder(visibleColumns), [visibleColumns]);
@@ -275,8 +278,8 @@ const CustomersTable = memo(function CustomersTable({
         <div className="customers-table-scroll">
             <div className="customers-table" style={{ '--customers-grid': gridTemplateColumns, minWidth: tableMinWidth }}>
                 <div className="customers-table-header" role="row">
-                    {visibleColumns.id && <div className="customers-header-cell" role="columnheader">#</div>}
-                    {visibleColumns.name && <div className="customers-header-cell" role="columnheader">الاسم</div>}
+                    {visibleColumns.id && <div className="customers-header-cell" role="columnheader" onClick={() => onSortChange && onSortChange('id')} style={{ cursor: 'pointer' }}># {sortCol === 'id' ? (sortDir === 'asc' ? '↑' : '↓') : ''}</div>}
+                    {visibleColumns.name && <div className="customers-header-cell" role="columnheader" onClick={() => onSortChange && onSortChange('name')} style={{ cursor: 'pointer' }}>الاسم {sortCol === 'name' ? (sortDir === 'asc' ? '↑' : '↓') : ''}</div>}
                     {visibleColumns.type && <div className="customers-header-cell" role="columnheader">النوع</div>}
                     {visibleColumns.phone && <div className="customers-header-cell" role="columnheader">الهاتف</div>}
                     {visibleColumns.phone2 && <div className="customers-header-cell" role="columnheader">الهاتف 2</div>}
@@ -285,7 +288,7 @@ const CustomersTable = memo(function CustomersTable({
                     {visibleColumns.district && <div className="customers-header-cell" role="columnheader">المنطقة</div>}
                     {visibleColumns.notes && <div className="customers-header-cell" role="columnheader">الملاحظات</div>}
                     {visibleColumns.creditLimit && <div className="customers-header-cell" role="columnheader">الحد الائتماني</div>}
-                    {visibleColumns.balance && <div className="customers-header-cell" role="columnheader">الرصيد</div>}
+                    {visibleColumns.balance && <div className="customers-header-cell" role="columnheader" onClick={() => onSortChange && onSortChange('balance')} style={{ cursor: 'pointer' }}>الرصيد {sortCol === 'balance' ? (sortDir === 'asc' ? '↑' : '↓') : ''}</div>}
                     {visibleColumns.actions && <div className="customers-header-cell customers-action-cell" role="columnheader">{'\u0627\u0644\u0625\u062C\u0631\u0627\u0621\u0627\u062A'}</div>}
                 </div>
 
