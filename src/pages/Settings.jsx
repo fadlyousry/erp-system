@@ -2390,7 +2390,7 @@ export default function Settings() {
                 الباركود عند فتحه.
               </p>
 
-              <div className="settings-print-summary">
+              <div className="settings-print-summary" style={{ marginBottom: '24px' }}>
                 <div className="settings-print-summary-item">
                   <span>فاتورة البيع</span>
                   <strong>{defaultInvoicePrintLayout === 'receipt80' ? 'ريسيت 80mm' : defaultInvoicePrintLayout.toUpperCase()}</strong>
@@ -2417,419 +2417,55 @@ export default function Settings() {
                 </div>
               </div>
 
-              <p className="settings-section-title">مقاسات الفواتير والإيصالات</p>
+              {/* === Group 1: Printers === */}
+              <div className="settings-sub-card">
+                <p className="settings-sub-card-title">1. الطابعات الافتراضية</p>
+                <div className="settings-config-grid">
+                  <label className="settings-config-field">
+                    <span>طابعة الفواتير والإيصالات</span>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      <select
+                        className="settings-select"
+                        value={defaultPrinterName}
+                        onChange={(event) => setDefaultPrinterName(event.target.value)}
+                        disabled={savingPrintSettings || loadingPrinters}
+                        style={{ flex: 1 }}
+                      >
+                        <option value="">استخدام طابعة النظام الافتراضية</option>
+                        {printers.map((printer) => {
+                          const printerName = String(printer?.name || '').trim();
+                          if (!printerName) return null;
+                          const printerLabel = printer?.displayName || printerName;
+                          return (
+                            <option key={`invoice-${printerName}`} value={printerName}>
+                              {printerLabel}
+                              {printer?.isDefault ? ' (افتراضي النظام)' : ''}
+                            </option>
+                          );
+                        })}
+                      </select>
+                      <button
+                        type="button"
+                        onClick={loadPrinters}
+                        className="settings-btn settings-btn-secondary"
+                        disabled={loadingPrinters || savingPrintSettings}
+                        style={{ padding: '0 16px', height: '42px', flexShrink: 0 }}
+                        title="تحديث قائمة الطابعات"
+                      >
+                        🔄
+                      </button>
+                    </div>
+                  </label>
 
-              <div className="settings-print-grid settings-print-layout-grid">
-              <div className="settings-form-group">
-                <span className="settings-form-label">المقاس الافتراضي لطباعة فواتير البيع</span>
-                <div className="settings-segmented-control">
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultInvoicePrintLayout"
-                      value="receipt80"
-                      checked={defaultInvoicePrintLayout === 'receipt80'}
-                      onChange={(event) => setDefaultInvoicePrintLayout(event.target.value)}
-                    />
-                    <span>ريسيت 80mm</span>
-                  </label>
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultInvoicePrintLayout"
-                      value="a4"
-                      checked={defaultInvoicePrintLayout === 'a4'}
-                      onChange={(event) => setDefaultInvoicePrintLayout(event.target.value)}
-                    />
-                    <span>A4</span>
-                  </label>
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultInvoicePrintLayout"
-                      value="a5"
-                      checked={defaultInvoicePrintLayout === 'a5'}
-                      onChange={(event) => setDefaultInvoicePrintLayout(event.target.value)}
-                    />
-                    <span>A5</span>
-                  </label>
-                </div>
-              </div>
-
-              <div className="settings-form-group">
-                <span className="settings-form-label">المقاس الافتراضي لطباعة فواتير الشراء</span>
-                <div className="settings-segmented-control">
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultPurchaseInvoicePrintLayout"
-                      value="receipt80"
-                      checked={defaultPurchaseInvoicePrintLayout === 'receipt80'}
-                      onChange={(event) => setDefaultPurchaseInvoicePrintLayout(event.target.value)}
-                    />
-                    <span>ريسيت 80mm</span>
-                  </label>
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultPurchaseInvoicePrintLayout"
-                      value="a4"
-                      checked={defaultPurchaseInvoicePrintLayout === 'a4'}
-                      onChange={(event) => setDefaultPurchaseInvoicePrintLayout(event.target.value)}
-                    />
-                    <span>A4</span>
-                  </label>
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultPurchaseInvoicePrintLayout"
-                      value="a5"
-                      checked={defaultPurchaseInvoicePrintLayout === 'a5'}
-                      onChange={(event) => setDefaultPurchaseInvoicePrintLayout(event.target.value)}
-                    />
-                    <span>A5</span>
-                  </label>
-                </div>
-              </div>
-
-              <div className="settings-form-group">
-                <span className="settings-form-label">المقاس الافتراضي لطباعة إيصالات الدفعات</span>
-                <div className="settings-segmented-control">
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultPaymentReceiptPrintLayout"
-                      value="receipt80"
-                      checked={defaultPaymentReceiptPrintLayout === 'receipt80'}
-                      onChange={(event) => setDefaultPaymentReceiptPrintLayout(event.target.value)}
-                    />
-                    <span>ريسيت 80mm</span>
-                  </label>
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultPaymentReceiptPrintLayout"
-                      value="a4"
-                      checked={defaultPaymentReceiptPrintLayout === 'a4'}
-                      onChange={(event) => setDefaultPaymentReceiptPrintLayout(event.target.value)}
-                    />
-                    <span>A4</span>
-                  </label>
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultPaymentReceiptPrintLayout"
-                      value="a5"
-                      checked={defaultPaymentReceiptPrintLayout === 'a5'}
-                      onChange={(event) => setDefaultPaymentReceiptPrintLayout(event.target.value)}
-                    />
-                    <span>A5</span>
-                  </label>
-                </div>
-              </div>
-
-              <div className="settings-form-group">
-                <span className="settings-form-label">المقاس الافتراضي لطباعة مرتجعات المبيعات</span>
-                <div className="settings-segmented-control">
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultSaleReturnPrintLayout"
-                      value="receipt80"
-                      checked={defaultSaleReturnPrintLayout === 'receipt80'}
-                      onChange={(event) => setDefaultSaleReturnPrintLayout(event.target.value)}
-                    />
-                    <span>ريسيت 80mm</span>
-                  </label>
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultSaleReturnPrintLayout"
-                      value="a4"
-                      checked={defaultSaleReturnPrintLayout === 'a4'}
-                      onChange={(event) => setDefaultSaleReturnPrintLayout(event.target.value)}
-                    />
-                    <span>A4</span>
-                  </label>
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultSaleReturnPrintLayout"
-                      value="a5"
-                      checked={defaultSaleReturnPrintLayout === 'a5'}
-                      onChange={(event) => setDefaultSaleReturnPrintLayout(event.target.value)}
-                    />
-                    <span>A5</span>
-                  </label>
-                </div>
-              </div>
-
-              <div className="settings-form-group">
-                <span className="settings-form-label">المقاس الافتراضي لطباعة مرتجعات المشتريات</span>
-                <div className="settings-segmented-control">
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultPurchaseReturnPrintLayout"
-                      value="receipt80"
-                      checked={defaultPurchaseReturnPrintLayout === 'receipt80'}
-                      onChange={(event) => setDefaultPurchaseReturnPrintLayout(event.target.value)}
-                    />
-                    <span>ريسيت 80mm</span>
-                  </label>
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultPurchaseReturnPrintLayout"
-                      value="a4"
-                      checked={defaultPurchaseReturnPrintLayout === 'a4'}
-                      onChange={(event) => setDefaultPurchaseReturnPrintLayout(event.target.value)}
-                    />
-                    <span>A4</span>
-                  </label>
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultPurchaseReturnPrintLayout"
-                      value="a5"
-                      checked={defaultPurchaseReturnPrintLayout === 'a5'}
-                      onChange={(event) => setDefaultPurchaseReturnPrintLayout(event.target.value)}
-                    />
-                    <span>A5</span>
-                  </label>
-                </div>
-              </div>
-              </div>
-
-              <hr className="settings-section-divider" />
-              <p className="settings-section-title">قوالب الفواتير</p>
-
-              <div className="settings-print-grid settings-print-template-grid">
-              <div className="settings-form-group">
-                <span className="settings-form-label">قالب ريسيت 80mm المفضل</span>
-                <div className="settings-segmented-control">
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultReceipt80Template"
-                      value="professional"
-                      checked={defaultReceipt80Template === 'professional'}
-                      onChange={(event) => setDefaultReceipt80Template(event.target.value)}
-                    />
-                    <span>احترافي</span>
-                  </label>
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultReceipt80Template"
-                      value="modern"
-                      checked={defaultReceipt80Template === 'modern'}
-                      onChange={(event) => setDefaultReceipt80Template(event.target.value)}
-                    />
-                    <span>عصري</span>
-                  </label>
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultReceipt80Template"
-                      value="classic"
-                      checked={defaultReceipt80Template === 'classic'}
-                      onChange={(event) => setDefaultReceipt80Template(event.target.value)}
-                    />
-                    <span>كلاسيكي</span>
-                  </label>
-                </div>
-              </div>
-
-              <div className="settings-form-group">
-                <span className="settings-form-label">قالب A4 المفضل</span>
-                <div className="settings-segmented-control">
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultA4Template"
-                      value="professional"
-                      checked={defaultA4Template === 'professional'}
-                      onChange={(event) => setDefaultA4Template(event.target.value)}
-                    />
-                    <span>احترافي</span>
-                  </label>
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultA4Template"
-                      value="modern"
-                      checked={defaultA4Template === 'modern'}
-                      onChange={(event) => setDefaultA4Template(event.target.value)}
-                    />
-                    <span>عصري</span>
-                  </label>
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultA4Template"
-                      value="classic"
-                      checked={defaultA4Template === 'classic'}
-                      onChange={(event) => setDefaultA4Template(event.target.value)}
-                    />
-                    <span>كلاسيكي</span>
-                  </label>
-                </div>
-              </div>
-
-              <div className="settings-form-group">
-                <span className="settings-form-label">قالب A5 المفضل</span>
-                <div className="settings-segmented-control">
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultA5Template"
-                      value="professional"
-                      checked={defaultA5Template === 'professional'}
-                      onChange={(event) => setDefaultA5Template(event.target.value)}
-                    />
-                    <span>احترافي</span>
-                  </label>
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultA5Template"
-                      value="modern"
-                      checked={defaultA5Template === 'modern'}
-                      onChange={(event) => setDefaultA5Template(event.target.value)}
-                    />
-                    <span>عصري</span>
-                  </label>
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultA5Template"
-                      value="classic"
-                      checked={defaultA5Template === 'classic'}
-                      onChange={(event) => setDefaultA5Template(event.target.value)}
-                    />
-                    <span>كلاسيكي</span>
-                  </label>
-                </div>
-              </div>
-              </div>
-
-              <hr className="settings-section-divider" />
-              <p className="settings-section-title">إعدادات اذن دفع نقدية</p>
-
-              <div className="settings-print-grid settings-print-voucher-grid">
-              <div className="settings-form-group">
-                <span className="settings-form-label">قالب 80mm (اذن دفع)</span>
-                <div className="settings-segmented-control">
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultPaymentVoucher80Template"
-                      value="classic"
-                      checked={defaultPaymentVoucher80Template === 'classic'}
-                      onChange={(event) => setDefaultPaymentVoucher80Template(event.target.value)}
-                    />
-                    <span>كلاسيكي</span>
-                  </label>
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultPaymentVoucher80Template"
-                      value="modern"
-                      checked={defaultPaymentVoucher80Template === 'modern'}
-                      onChange={(event) => setDefaultPaymentVoucher80Template(event.target.value)}
-                    />
-                    <span>عصري</span>
-                  </label>
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultPaymentVoucher80Template"
-                      value="professional"
-                      checked={defaultPaymentVoucher80Template === 'professional'}
-                      onChange={(event) => setDefaultPaymentVoucher80Template(event.target.value)}
-                    />
-                    <span>احترافي</span>
-                  </label>
-                </div>
-              </div>
-
-              <div className="settings-form-group">
-                <span className="settings-form-label">قالب A4 (اذن دفع)</span>
-                <div className="settings-segmented-control">
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultPaymentVoucherA4Template"
-                      value="classic"
-                      checked={defaultPaymentVoucherA4Template === 'classic'}
-                      onChange={(event) => setDefaultPaymentVoucherA4Template(event.target.value)}
-                    />
-                    <span>كلاسيكي</span>
-                  </label>
-                </div>
-              </div>
-
-              <div className="settings-form-group">
-                <span className="settings-form-label">قالب A5 (اذن دفع)</span>
-                <div className="settings-segmented-control">
-                  <label className="settings-segment">
-                    <input
-                      type="radio"
-                      name="defaultPaymentVoucherA5Template"
-                      value="classic"
-                      checked={defaultPaymentVoucherA5Template === 'classic'}
-                      onChange={(event) => setDefaultPaymentVoucherA5Template(event.target.value)}
-                    />
-                    <span>كلاسيكي</span>
-                  </label>
-                </div>
-              </div>
-              </div>
-
-
-              <hr className="settings-section-divider" />
-              <p className="settings-section-title">الطابعة العامة</p>
-
-              <div className="settings-form-group settings-print-printer-panel">
-                <div className="settings-printer-grid">
-                  <label className="settings-printer-choice" htmlFor="defaultPrinterName">
-                    <span className="settings-form-label">طابعة الفواتير والإيصالات</span>
+                  <label className="settings-config-field">
+                    <span>طابعة ملصقات الباركود</span>
                     <select
-                      id="defaultPrinterName"
-                      className="settings-select"
-                      value={defaultPrinterName}
-                      onChange={(event) => setDefaultPrinterName(event.target.value)}
-                      disabled={savingPrintSettings || loadingPrinters}
-                    >
-                      <option value="">استخدام طابعة النظام الافتراضية</option>
-                      {printers.map((printer) => {
-                        const printerName = String(printer?.name || '').trim();
-                        if (!printerName) return null;
-                        const printerLabel = printer?.displayName || printerName;
-                        return (
-                          <option key={`invoice-${printerName}`} value={printerName}>
-                            {printerLabel}
-                            {printer?.isDefault ? ' (افتراضي النظام)' : ''}
-                          </option>
-                        );
-                      })}
-                    </select>
-                    <small className="settings-form-help">
-                      تستخدم في الفواتير والإيصالات والمرتجعات ما لم توجد إعدادات خاصة في شاشة معينة.
-                    </small>
-                  </label>
-
-                  <label className="settings-printer-choice" htmlFor="defaultBarcodePrinterName">
-                    <span className="settings-form-label">طابعة الباركود</span>
-                    <select
-                      id="defaultBarcodePrinterName"
                       className="settings-select"
                       value={defaultBarcodePrinterName}
                       onChange={(event) => setDefaultBarcodePrinterName(event.target.value)}
                       disabled={savingPrintSettings || loadingPrinters}
                     >
-                      <option value="">استخدام طابعة الفواتير / النظام الافتراضية</option>
+                      <option value="">استخدام طابعة الفواتير الافتراضية</option>
                       {printers.map((printer) => {
                         const printerName = String(printer?.name || '').trim();
                         if (!printerName) return null;
@@ -2842,19 +2478,169 @@ export default function Settings() {
                         );
                       })}
                     </select>
-                    <small className="settings-form-help">
-                      تستخدم عند طباعة ملصقات الباركود من شاشة المنتجات أو استوديو الباركود.
-                    </small>
                   </label>
                 </div>
-                <button
-                  type="button"
-                  onClick={loadPrinters}
-                  className="settings-btn settings-btn-secondary"
-                  disabled={loadingPrinters || savingPrintSettings}
-                >
-                  {loadingPrinters ? 'جاري تحميل الطابعات...' : 'تحديث الطابعات'}
-                </button>
+              </div>
+
+              {/* === Group 2: Default Paper Sizes === */}
+              <div className="settings-sub-card">
+                <p className="settings-sub-card-title">2. المقاسات الافتراضية للطباعة</p>
+                <div className="settings-config-grid">
+                  <label className="settings-config-field">
+                    <span>فاتورة البيع</span>
+                    <select
+                      className="settings-select"
+                      value={defaultInvoicePrintLayout}
+                      onChange={(event) => setDefaultInvoicePrintLayout(event.target.value)}
+                    >
+                      <option value="receipt80">ريسيت 80mm</option>
+                      <option value="a4">A4</option>
+                      <option value="a5">A5</option>
+                    </select>
+                  </label>
+
+                  <label className="settings-config-field">
+                    <span>فاتورة الشراء</span>
+                    <select
+                      className="settings-select"
+                      value={defaultPurchaseInvoicePrintLayout}
+                      onChange={(event) => setDefaultPurchaseInvoicePrintLayout(event.target.value)}
+                    >
+                      <option value="receipt80">ريسيت 80mm</option>
+                      <option value="a4">A4</option>
+                      <option value="a5">A5</option>
+                    </select>
+                  </label>
+
+                  <label className="settings-config-field">
+                    <span>إيصالات الدفع (سند القبض)</span>
+                    <select
+                      className="settings-select"
+                      value={defaultPaymentReceiptPrintLayout}
+                      onChange={(event) => setDefaultPaymentReceiptPrintLayout(event.target.value)}
+                    >
+                      <option value="receipt80">ريسيت 80mm</option>
+                      <option value="a4">A4</option>
+                      <option value="a5">A5</option>
+                    </select>
+                  </label>
+
+                  <label className="settings-config-field">
+                    <span>مرتجعات المبيعات</span>
+                    <select
+                      className="settings-select"
+                      value={defaultSaleReturnPrintLayout}
+                      onChange={(event) => setDefaultSaleReturnPrintLayout(event.target.value)}
+                    >
+                      <option value="receipt80">ريسيت 80mm</option>
+                      <option value="a4">A4</option>
+                      <option value="a5">A5</option>
+                    </select>
+                  </label>
+
+                  <label className="settings-config-field">
+                    <span>مرتجعات المشتريات</span>
+                    <select
+                      className="settings-select"
+                      value={defaultPurchaseReturnPrintLayout}
+                      onChange={(event) => setDefaultPurchaseReturnPrintLayout(event.target.value)}
+                    >
+                      <option value="receipt80">ريسيت 80mm</option>
+                      <option value="a4">A4</option>
+                      <option value="a5">A5</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+
+              {/* === Group 3: Template Designs === */}
+              <div className="settings-sub-card">
+                <p className="settings-sub-card-title">3. المظهر والتصميم الفني للقوالب</p>
+                <div className="settings-config-grid" style={{ alignItems: 'flex-start' }}>
+                  
+                  {/* Invoices Column */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', background: '#f8fafc', padding: '16px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                    <h4 style={{ margin: '0 0 -5px', fontSize: '1rem', color: 'var(--settings-brand-strong)' }}>قوالب الفواتير</h4>
+                    <label className="settings-config-field">
+                      <span>تصميم الريسيت 80mm</span>
+                      <select
+                        className="settings-select"
+                        value={defaultReceipt80Template}
+                        onChange={(event) => setDefaultReceipt80Template(event.target.value)}
+                      >
+                        <option value="professional">احترافي (Professional)</option>
+                        <option value="modern">عصري (Modern)</option>
+                        <option value="classic">كلاسيكي (Classic)</option>
+                      </select>
+                    </label>
+
+                    <label className="settings-config-field">
+                      <span>تصميم مقاس A4</span>
+                      <select
+                        className="settings-select"
+                        value={defaultA4Template}
+                        onChange={(event) => setDefaultA4Template(event.target.value)}
+                      >
+                        <option value="professional">احترافي (Professional)</option>
+                        <option value="modern">عصري (Modern)</option>
+                        <option value="classic">كلاسيكي (Classic)</option>
+                      </select>
+                    </label>
+
+                    <label className="settings-config-field">
+                      <span>تصميم مقاس A5</span>
+                      <select
+                        className="settings-select"
+                        value={defaultA5Template}
+                        onChange={(event) => setDefaultA5Template(event.target.value)}
+                      >
+                        <option value="professional">احترافي (Professional)</option>
+                        <option value="modern">عصري (Modern)</option>
+                        <option value="classic">كلاسيكي (Classic)</option>
+                      </select>
+                    </label>
+                  </div>
+
+                  {/* Vouchers Column */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', background: '#f8fafc', padding: '16px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                    <h4 style={{ margin: '0 0 -5px', fontSize: '1rem', color: 'var(--settings-brand-strong)' }}>قوالب أذونات الدفع</h4>
+                    <label className="settings-config-field">
+                      <span>تصميم إذن الدفع 80mm</span>
+                      <select
+                        className="settings-select"
+                        value={defaultPaymentVoucher80Template}
+                        onChange={(event) => setDefaultPaymentVoucher80Template(event.target.value)}
+                      >
+                        <option value="professional">احترافي (Professional)</option>
+                        <option value="modern">عصري (Modern)</option>
+                        <option value="classic">كلاسيكي (Classic)</option>
+                      </select>
+                    </label>
+
+                    <label className="settings-config-field">
+                      <span>تصميم إذن الدفع A4</span>
+                      <select
+                        className="settings-select"
+                        value={defaultPaymentVoucherA4Template}
+                        onChange={(event) => setDefaultPaymentVoucherA4Template(event.target.value)}
+                      >
+                        <option value="classic">كلاسيكي (Classic)</option>
+                      </select>
+                    </label>
+
+                    <label className="settings-config-field">
+                      <span>تصميم إذن الدفع A5</span>
+                      <select
+                        className="settings-select"
+                        value={defaultPaymentVoucherA5Template}
+                        onChange={(event) => setDefaultPaymentVoucherA5Template(event.target.value)}
+                      >
+                        <option value="classic">كلاسيكي (Classic)</option>
+                      </select>
+                    </label>
+                  </div>
+
+                </div>
               </div>
 
               <div className="settings-actions">
