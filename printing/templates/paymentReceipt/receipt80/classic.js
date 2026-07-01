@@ -63,7 +63,7 @@ export const renderClassic = ({ payment, customer, company }) => {
     }
     @media print {
       .receipt-wrap {
-        margin-left: -19mm;
+        margin: 0;
       }
     }
   </style>

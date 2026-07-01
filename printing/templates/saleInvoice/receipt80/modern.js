@@ -47,7 +47,7 @@ export const template = `
 
     @media print {
       body {
-        margin-left: -19mm;
+        margin: 0;
       }
     }
 
